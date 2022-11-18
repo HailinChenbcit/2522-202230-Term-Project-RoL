@@ -1,13 +1,7 @@
 package ca.bcit.comp2522.termproject.map;
 
 import ca.bcit.comp2522.termproject.battleground.BattleGround;
-import ca.bcit.comp2522.termproject.rol.MainMenu;
 import ca.bcit.comp2522.termproject.treasure.Treasure;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
 /**
  * Map class.

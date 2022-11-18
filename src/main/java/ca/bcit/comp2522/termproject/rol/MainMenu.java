@@ -1,11 +1,14 @@
 package ca.bcit.comp2522.termproject.rol;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -27,9 +30,14 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-
+/**
+ * MainMenu class.
+ *
+ * @author hailinchen
+ * @version 0.1
+ */
 public class MainMenu extends Application {
-    private Parent createContent() {
+    private Parent createContent(final Stage primaryStage) {
         Pane root = new Pane();
 
         root.setPrefSize(860, 600);
@@ -49,8 +57,10 @@ public class MainMenu extends Application {
 
         MenuItem itemExit = new MenuItem("EXIT");
         itemExit.setOnMousePressed(mouseEvent -> System.exit(0));
+        MenuItem itemNewGame = new MenuItem("NEW GAME");
+        itemNewGame.setOnMousePressed(mouseEvent -> primaryStage.setScene(mapScene(primaryStage)));
         MenuBox vbox = new MenuBox(
-                new MenuItem("NEW GAME"),
+                itemNewGame,
                 new MenuItem("CONTACT"),
                 itemExit);
 
@@ -58,18 +68,43 @@ public class MainMenu extends Application {
         vbox.setTranslateY(300);
 
         root.getChildren().addAll(title, vbox);
-
         return root;
     }
 
+    private Scene mainMenuScene(final Stage primaryStage) {
+        Button btn2 = new Button("Back to Main");
+        StackPane layout2 = new StackPane();
+        layout2.getChildren().addAll(btn2);
+        return new Scene(layout2, 600, 300);
+    }
+
+    private Scene mapScene(final Stage primaryStage) {
+        Button btn2 = new Button("Back to Main");
+        btn2.setOnMousePressed(mouseEvent -> primaryStage.setScene(mainMenuScene(primaryStage)));
+        StackPane layout2 = new StackPane();
+        layout2.getChildren().addAll(btn2);
+        return new Scene(layout2, 600, 300);
+    }
+
+    /**
+     * Starts the game.
+     *
+     * @param primaryStage initial stage.
+     * @throws Exception Exceptions.
+     */
     public void start(final Stage primaryStage) throws Exception {
-        Scene scene = new Scene(createContent());
+        Scene scene = new Scene(createContent(primaryStage));
         primaryStage.setTitle("Realm of Legends");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     private static class Title extends StackPane {
+        /**
+         * Title class to s how game title.
+         *
+         * @param name a string represents title.
+         */
         public Title(final String name) {
             Rectangle bg = new Rectangle(300, 60);
             bg.setStroke(Color.WHITESMOKE);
@@ -89,7 +124,7 @@ public class MainMenu extends Application {
         public MenuBox(final MainMenu.MenuItem... items) {
             getChildren().add(createSeparator());
 
-            for (MainMenu.MenuItem item: items) {
+            for (MainMenu.MenuItem item : items) {
                 getChildren().addAll(item, createSeparator());
             }
         }
@@ -136,7 +171,11 @@ public class MainMenu extends Application {
         }
     }
 
-
+    /**
+     * The game driver.
+     *
+     * @param args commandline arguments.
+     */
     public static void main(final String[] args) {
         launch(args);
     }

@@ -1,12 +1,14 @@
 package ca.bcit.comp2522.termproject.rol;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -74,41 +76,52 @@ public class MainMenu extends Application {
         return new Scene(layout2, 600, 300);
     }
 
+    private void clickDisableBtn(final Button button) {
+        button.setOnMouseClicked(mouseEvent -> button.setDisable(true));
+    }
+
+    private void checkSelectionBtn(final Button btnOne, final Button btnTwo, final Button btnThree) {
+        if (btnTwo.isDisable() && btnThree.isDisable()) {
+            btnOne.setDisable(false);
+        } else if (btnOne.isDisable() && btnThree.isDisable()) {
+            btnTwo.setDisable(false);
+        } else if (btnOne.isDisable() && btnTwo.isDisable()) {
+            btnThree.setDisable(false);
+        }
+    }
+
+    private void setBtnLocation(final Button button, final int xCord, final int yCord) {
+        button.setTranslateX(xCord);
+        button.setTranslateY(yCord);
+    }
+
     private Scene mapScene(final Stage primaryStage) {
         Button backBtn = new Button("Back to Main");
         Button monsterBtn = new Button();
         Button treasureBtn = new Button();
         Button bossBtn = new Button();
-
         Image monsterIcon = new Image("file:resources/images/monster.png");
         Image treasureIcon = new Image("file:resources/images/treasure.png");
         Image bossIcon = new Image("file:resources/images/boss.png");
         ImageView monsterView = new ImageView(monsterIcon);
         ImageView treasureView = new ImageView(treasureIcon);
         ImageView bossView = new ImageView(bossIcon);
-
         backBtn.setOnMousePressed(mouseEvent -> primaryStage.setScene(mainMenuScene(primaryStage)));
-
         StackPane layout2 = new StackPane();
-
         layout2.getChildren().add(backBtn);
         StackPane.setAlignment(backBtn, Pos.TOP_RIGHT);
-
         layout2.getChildren().add(monsterBtn);
-        monsterBtn.setTranslateX(-420);
-        monsterBtn.setTranslateY(-50);
+        setBtnLocation(monsterBtn, -420, -50);
         monsterBtn.setGraphic(monsterView);
-
+        clickDisableBtn(monsterBtn);
         layout2.getChildren().add(treasureBtn);
-        treasureBtn.setTranslateX(0);
-        treasureBtn.setTranslateY(-50);
+        setBtnLocation(treasureBtn, 0, -50);
         treasureBtn.setGraphic(treasureView);
-
+        clickDisableBtn(treasureBtn);
         layout2.getChildren().add(bossBtn);
-        bossBtn.setTranslateX(420);
-        bossBtn.setTranslateY(-50);
+        setBtnLocation(bossBtn, 420, -50);
         bossBtn.setGraphic(bossView);
-
+        clickDisableBtn(bossBtn);
         return new Scene(layout2, 1600, 800);
     }
 

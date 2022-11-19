@@ -80,9 +80,16 @@ public class MainMenu extends Application {
 
     private Scene mapScene(final Stage primaryStage) {
         Button backBtn = new Button("Back to Main");
-        Button monsterBtn = new Button("monster");
-        Button treasureBtn = new Button("treasure");
-        Button bossBtn = new Button("boss");
+        Button monsterBtn = new Button();
+        Button treasureBtn = new Button();
+        Button bossBtn = new Button();
+
+        Image monsterIcon = new Image("file:resources/images/monster.png");
+        Image treasureIcon = new Image("file:resources/images/treasure.png");
+        Image bossIcon = new Image("file:resources/images/boss.png");
+        ImageView monsterView = new ImageView(monsterIcon);
+        ImageView treasureView = new ImageView(treasureIcon);
+        ImageView bossView = new ImageView(bossIcon);
 
         backBtn.setOnMousePressed(mouseEvent -> primaryStage.setScene(mainMenuScene(primaryStage)));
 
@@ -94,14 +101,17 @@ public class MainMenu extends Application {
         layout2.getChildren().add(monsterBtn);
         monsterBtn.setTranslateX(-420);
         monsterBtn.setTranslateY(-50);
+        monsterBtn.setGraphic(monsterView);
 
         layout2.getChildren().add(treasureBtn);
         treasureBtn.setTranslateX(0);
         treasureBtn.setTranslateY(-50);
+        treasureBtn.setGraphic(treasureView);
 
         layout2.getChildren().add(bossBtn);
         bossBtn.setTranslateX(420);
         bossBtn.setTranslateY(-50);
+        bossBtn.setGraphic(bossView);
 
         return new Scene(layout2, 1600, 800);
     }

@@ -79,11 +79,31 @@ public class MainMenu extends Application {
     }
 
     private Scene mapScene(final Stage primaryStage) {
-        Button btn2 = new Button("Back to Main");
-        btn2.setOnMousePressed(mouseEvent -> primaryStage.setScene(mainMenuScene(primaryStage)));
+        Button backBtn = new Button("Back to Main");
+        Button monsterBtn = new Button("monster");
+        Button treasureBtn = new Button("treasure");
+        Button bossBtn = new Button("boss");
+
+        backBtn.setOnMousePressed(mouseEvent -> primaryStage.setScene(mainMenuScene(primaryStage)));
+
         StackPane layout2 = new StackPane();
-        layout2.getChildren().addAll(btn2);
-        return new Scene(layout2, 600, 300);
+
+        layout2.getChildren().add(backBtn);
+        StackPane.setAlignment(backBtn, Pos.TOP_RIGHT);
+
+        layout2.getChildren().add(monsterBtn);
+        monsterBtn.setTranslateX(-420);
+        monsterBtn.setTranslateY(-50);
+
+        layout2.getChildren().add(treasureBtn);
+        treasureBtn.setTranslateX(0);
+        treasureBtn.setTranslateY(-50);
+
+        layout2.getChildren().add(bossBtn);
+        bossBtn.setTranslateX(420);
+        bossBtn.setTranslateY(-50);
+
+        return new Scene(layout2, 1600, 800);
     }
 
     /**

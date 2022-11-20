@@ -1,19 +1,13 @@
 package ca.bcit.comp2522.termproject.rol;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -24,7 +18,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -78,12 +71,63 @@ public class MainMenu extends Application {
         return new Scene(layout2, 600, 300);
     }
 
+    private void checkSelectionBtn(final Button btnOne, final Button btnTwo, final Button btnThree) {
+        if (btnTwo.isDisable() && btnThree.isDisable()) {
+            btnOne.setDisable(false);
+        } else if (btnOne.isDisable() && btnThree.isDisable()) {
+            btnTwo.setDisable(false);
+        } else if (btnOne.isDisable() && btnTwo.isDisable()) {
+            btnThree.setDisable(false);
+        }
+    }
+
+    private void setBtnLocation(final ImageView view, final Button button, final int xCord, final int yCord) {
+        button.setTranslateX(xCord);
+        button.setTranslateY(yCord);
+        button.setGraphic(view);
+        button.setOnAction(e -> {
+            boolean result = PopUpMessages.display("Confirmation Box", "Are you sure?");
+            if (result) {
+                button.setDisable(true);
+            }
+        });
+    }
+
+
+
     private Scene mapScene(final Stage primaryStage) {
-        Button btn2 = new Button("Back to Main");
-        btn2.setOnMousePressed(mouseEvent -> primaryStage.setScene(mainMenuScene(primaryStage)));
+        Button backBtn = new Button("Back to Main");
+        Button monsterBtn = new Button();
+        Button treasureBtn = new Button();
+        Button bossBtn = new Button();
+
+        Image monsterIcon = new Image("file:resources/images/monster.png");
+        Image treasureIcon = new Image("file:resources/images/treasure.png");
+        Image bossIcon = new Image("file:resources/images/boss.png");
+        Image background = new Image("file:resources/images/mapBackground.jpg");
+
+        ImageView monsterView = new ImageView(monsterIcon);
+        ImageView treasureView = new ImageView(treasureIcon);
+        ImageView bossView = new ImageView(bossIcon);
+        ImageView backgroundView = new ImageView(background);
+
+        backBtn.setOnMousePressed(mouseEvent -> primaryStage.setScene(mainMenuScene(primaryStage)));
+
         StackPane layout2 = new StackPane();
-        layout2.getChildren().addAll(btn2);
-        return new Scene(layout2, 600, 300);
+        layout2.getChildren().addAll(backgroundView);
+        layout2.getChildren().add(backBtn);
+        StackPane.setAlignment(backBtn, Pos.TOP_RIGHT);
+
+        layout2.getChildren().add(monsterBtn);
+        setBtnLocation(monsterView, monsterBtn, -320, -50);
+
+        layout2.getChildren().add(treasureBtn);
+        setBtnLocation(treasureView, treasureBtn, 0, -50);
+
+        layout2.getChildren().add(bossBtn);
+        setBtnLocation(bossView, bossBtn, 320, -50);
+
+        return new Scene(layout2, 1000, 600);
     }
 
     /**

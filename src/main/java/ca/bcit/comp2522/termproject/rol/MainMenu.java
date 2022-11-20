@@ -1,16 +1,12 @@
 package ca.bcit.comp2522.termproject.rol;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -21,9 +17,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -91,7 +85,15 @@ public class MainMenu extends Application {
         button.setTranslateX(xCord);
         button.setTranslateY(yCord);
         button.setGraphic(view);
+        button.setOnAction(e -> {
+            boolean result = PopUpMessages.display("Confirmation Box", "Are you sure?");
+            if (result) {
+                button.setDisable(true);
+            }
+        });
     }
+
+
 
     private Scene mapScene(final Stage primaryStage) {
         Button backBtn = new Button("Back to Main");
@@ -102,45 +104,30 @@ public class MainMenu extends Application {
         Image monsterIcon = new Image("file:resources/images/monster.png");
         Image treasureIcon = new Image("file:resources/images/treasure.png");
         Image bossIcon = new Image("file:resources/images/boss.png");
+        Image background = new Image("file:resources/images/mapBackground.jpg");
 
         ImageView monsterView = new ImageView(monsterIcon);
         ImageView treasureView = new ImageView(treasureIcon);
         ImageView bossView = new ImageView(bossIcon);
+        ImageView backgroundView = new ImageView(background);
 
         backBtn.setOnMousePressed(mouseEvent -> primaryStage.setScene(mainMenuScene(primaryStage)));
 
         StackPane layout2 = new StackPane();
+        layout2.getChildren().addAll(backgroundView);
         layout2.getChildren().add(backBtn);
         StackPane.setAlignment(backBtn, Pos.TOP_RIGHT);
 
         layout2.getChildren().add(monsterBtn);
-        setBtnLocation(monsterView, monsterBtn, -420, -50);
-        monsterBtn.setOnAction(e -> {
-            boolean result = ConfirmBox.display("Confirmation Box", "Are you sure?");
-            if (result) {
-                monsterBtn.setDisable(true);
-            }
-        });
+        setBtnLocation(monsterView, monsterBtn, -320, -50);
 
         layout2.getChildren().add(treasureBtn);
         setBtnLocation(treasureView, treasureBtn, 0, -50);
-        treasureBtn.setOnAction(e -> {
-            boolean result = ConfirmBox.display("Confirmation Box", "Are you sure?");
-            if (result) {
-                treasureBtn.setDisable(true);
-            }
-        });
 
         layout2.getChildren().add(bossBtn);
-        setBtnLocation(bossView, bossBtn, 420, -50);
-        bossBtn.setOnAction(e -> {
-            boolean result = ConfirmBox.display("Confirmation Box", "Are you sure?");
-            if (result) {
-                bossBtn.setDisable(true);
-            }
-        });
+        setBtnLocation(bossView, bossBtn, 320, -50);
 
-        return new Scene(layout2, 1600, 800);
+        return new Scene(layout2, 1000, 600);
     }
 
     /**

@@ -1,17 +1,17 @@
 package ca.bcit.comp2522.termproject.rol;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -21,6 +21,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -76,10 +77,6 @@ public class MainMenu extends Application {
         return new Scene(layout2, 600, 300);
     }
 
-    private void clickDisableBtn(final Button button) {
-        button.setOnMouseClicked(mouseEvent -> button.setDisable(true));
-    }
-
     private void checkSelectionBtn(final Button btnOne, final Button btnTwo, final Button btnThree) {
         if (btnTwo.isDisable() && btnThree.isDisable()) {
             btnOne.setDisable(false);
@@ -90,9 +87,10 @@ public class MainMenu extends Application {
         }
     }
 
-    private void setBtnLocation(final Button button, final int xCord, final int yCord) {
+    private void setBtnLocation(final ImageView view, final Button button, final int xCord, final int yCord) {
         button.setTranslateX(xCord);
         button.setTranslateY(yCord);
+        button.setGraphic(view);
     }
 
     private Scene mapScene(final Stage primaryStage) {
@@ -100,28 +98,48 @@ public class MainMenu extends Application {
         Button monsterBtn = new Button();
         Button treasureBtn = new Button();
         Button bossBtn = new Button();
+
         Image monsterIcon = new Image("file:resources/images/monster.png");
         Image treasureIcon = new Image("file:resources/images/treasure.png");
         Image bossIcon = new Image("file:resources/images/boss.png");
+
         ImageView monsterView = new ImageView(monsterIcon);
         ImageView treasureView = new ImageView(treasureIcon);
         ImageView bossView = new ImageView(bossIcon);
+
         backBtn.setOnMousePressed(mouseEvent -> primaryStage.setScene(mainMenuScene(primaryStage)));
+
         StackPane layout2 = new StackPane();
         layout2.getChildren().add(backBtn);
         StackPane.setAlignment(backBtn, Pos.TOP_RIGHT);
+
         layout2.getChildren().add(monsterBtn);
-        setBtnLocation(monsterBtn, -420, -50);
-        monsterBtn.setGraphic(monsterView);
-        clickDisableBtn(monsterBtn);
+        setBtnLocation(monsterView, monsterBtn, -420, -50);
+        monsterBtn.setOnAction(e -> {
+            boolean result = ConfirmBox.display("Confirmation Box", "Are you sure?");
+            if (result) {
+                monsterBtn.setDisable(true);
+            }
+        });
+
         layout2.getChildren().add(treasureBtn);
-        setBtnLocation(treasureBtn, 0, -50);
-        treasureBtn.setGraphic(treasureView);
-        clickDisableBtn(treasureBtn);
+        setBtnLocation(treasureView, treasureBtn, 0, -50);
+        treasureBtn.setOnAction(e -> {
+            boolean result = ConfirmBox.display("Confirmation Box", "Are you sure?");
+            if (result) {
+                treasureBtn.setDisable(true);
+            }
+        });
+
         layout2.getChildren().add(bossBtn);
-        setBtnLocation(bossBtn, 420, -50);
-        bossBtn.setGraphic(bossView);
-        clickDisableBtn(bossBtn);
+        setBtnLocation(bossView, bossBtn, 420, -50);
+        bossBtn.setOnAction(e -> {
+            boolean result = ConfirmBox.display("Confirmation Box", "Are you sure?");
+            if (result) {
+                bossBtn.setDisable(true);
+            }
+        });
+
         return new Scene(layout2, 1600, 800);
     }
 

@@ -34,14 +34,12 @@ import java.nio.file.Paths;
  * @version 0.1
  */
 public class MainMenuController extends Application {
-    public Label mainScene;
-
     private Parent createContent(final Stage primaryStage) {
         Pane root = new Pane();
 
         root.setPrefSize(860, 600);
 
-        try (InputStream is = Files.newInputStream(Paths.get("resources/ca/bcit/comp2522/termproject/rol/images/mainBackground.jpg"))) {
+        try (InputStream is = Files.newInputStream(Paths.get("src/main/resources/images/mainBackground.jpg"))) {
             ImageView img = new ImageView(new Image(is));
             img.setFitWidth(860);
             img.setFitHeight(600);

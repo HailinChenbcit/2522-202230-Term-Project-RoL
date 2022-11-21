@@ -18,6 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -64,13 +65,6 @@ public class MainMenu extends Application {
         return root;
     }
 
-    private Scene mainMenuScene(final Stage primaryStage) {
-        Button btn2 = new Button("Back to Main");
-        StackPane layout2 = new StackPane();
-        layout2.getChildren().addAll(btn2);
-        return new Scene(layout2, 600, 300);
-    }
-
     private void checkSelectionBtn(final Button btnOne, final Button btnTwo, final Button btnThree) {
         if (btnTwo.isDisable() && btnThree.isDisable()) {
             btnOne.setDisable(false);
@@ -111,21 +105,18 @@ public class MainMenu extends Application {
         ImageView bossView = new ImageView(bossIcon);
         ImageView backgroundView = new ImageView(background);
 
-        backBtn.setOnMousePressed(mouseEvent -> primaryStage.setScene(mainMenuScene(primaryStage)));
+        backBtn.setOnMousePressed(mouseEvent -> primaryStage.setScene(new Scene(createContent(primaryStage))));
 
         StackPane layout2 = new StackPane();
-        layout2.getChildren().addAll(backgroundView);
-        layout2.getChildren().add(backBtn);
         StackPane.setAlignment(backBtn, Pos.TOP_RIGHT);
 
-        layout2.getChildren().add(monsterBtn);
         setBtnLocation(monsterView, monsterBtn, -320, -50);
 
-        layout2.getChildren().add(treasureBtn);
         setBtnLocation(treasureView, treasureBtn, 0, -50);
 
-        layout2.getChildren().add(bossBtn);
         setBtnLocation(bossView, bossBtn, 320, -50);
+
+        layout2.getChildren().addAll(backgroundView, backBtn, monsterBtn, treasureBtn, bossBtn);
 
         return new Scene(layout2, 1000, 600);
     }

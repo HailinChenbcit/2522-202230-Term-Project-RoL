@@ -95,7 +95,14 @@ public class MainMenu extends Application {
     private Scene battleScene(final Stage stage) {
         StackPane battleGround = new StackPane();
         Text text = new Text("Battle Ground!");
-        battleGround.getChildren().addAll(text);
+        ImageView monsterView = new ImageView(new Image("file:resources/images/monster_lvl1.gif"));
+        monsterView.setFitHeight(300);
+        monsterView.setPreserveRatio(true);
+        monsterView.setLayoutX(100);
+        monsterView.setLayoutY(100);
+
+
+        battleGround.getChildren().addAll(text, monsterView);
         return new Scene(battleGround, 1000, 600);
     }
 
@@ -109,16 +116,10 @@ public class MainMenu extends Application {
 
         backBtn.getStylesheets().add("file:resources/css/mapStyle.css");
 
-
-        Image monsterIcon = new Image("file:resources/images/monster.png");
-        Image treasureIcon = new Image("file:resources/images/treasure.png");
-        Image bossIcon = new Image("file:resources/images/boss.png");
-        Image background = new Image("file:resources/images/mapBackground.jpg");
-
-        ImageView monsterView = new ImageView(monsterIcon);
-        ImageView treasureView = new ImageView(treasureIcon);
-        ImageView bossView = new ImageView(bossIcon);
-        ImageView backgroundView = new ImageView(background);
+        ImageView monsterView = new ImageView(new Image("file:resources/images/monster.png"));
+        ImageView treasureView = new ImageView(new Image("file:resources/images/treasure.png"));
+        ImageView bossView = new ImageView(new Image("file:resources/images/boss.png"));
+        ImageView backgroundView = new ImageView("file:resources/images/mapBackground.jpg");
 
         backBtn.setOnMousePressed(mouseEvent -> primaryStage.setScene(new Scene(createContent(primaryStage))));
 

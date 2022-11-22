@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.rol;
 
+import ca.bcit.comp2522.termproject.battleground.BattleGround;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -92,13 +93,6 @@ public class MainMenu extends Application {
         });
     }
 
-    private Scene battleScene(final Stage stage) {
-        StackPane battleGround = new StackPane();
-        Text text = new Text("Battle Ground!");
-        battleGround.getChildren().addAll(text);
-        return new Scene(battleGround, 1000, 600);
-    }
-
     private Scene mapScene(final Stage primaryStage) {
 
         Button backBtn = new Button("Back to Main");
@@ -135,7 +129,7 @@ public class MainMenu extends Application {
             boolean result = PopUpMessages.display("Confirmation Box", "Are you sure?");
             if (result) {
                 monsterBtn.setDisable(true);
-                primaryStage.setScene(battleScene(primaryStage));
+                primaryStage.setScene(BattleGround.battleScene(primaryStage));
             }
         });
 
@@ -153,7 +147,7 @@ public class MainMenu extends Application {
             boolean result = PopUpMessages.display("Confirmation Box", "Are you sure?");
             if (result) {
                 bossBtn.setDisable(true);
-                primaryStage.setScene(battleScene(primaryStage));
+                primaryStage.setScene(BattleGround.battleScene(primaryStage));
             }
         });
 

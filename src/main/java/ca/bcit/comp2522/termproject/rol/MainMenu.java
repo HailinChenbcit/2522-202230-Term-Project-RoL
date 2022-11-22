@@ -1,10 +1,15 @@
 package ca.bcit.comp2522.termproject.rol;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -18,6 +23,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -64,13 +70,6 @@ public class MainMenu extends Application {
         return root;
     }
 
-    private Scene mainMenuScene(final Stage primaryStage) {
-        Button btn2 = new Button("Back to Main");
-        StackPane layout2 = new StackPane();
-        layout2.getChildren().addAll(btn2);
-        return new Scene(layout2, 600, 300);
-    }
-
     private void checkSelectionBtn(final Button btnOne, final Button btnTwo, final Button btnThree) {
         if (btnTwo.isDisable() && btnThree.isDisable()) {
             btnOne.setDisable(false);
@@ -93,13 +92,23 @@ public class MainMenu extends Application {
         });
     }
 
-
+    private Scene battleScene(final Stage stage) {
+        StackPane battleGround = new StackPane();
+        Text text = new Text("Battle Ground!");
+        battleGround.getChildren().addAll(text);
+        return new Scene(battleGround, 1000, 600);
+    }
 
     private Scene mapScene(final Stage primaryStage) {
+
         Button backBtn = new Button("Back to Main");
+        backBtn.setId("backBtn");
         Button monsterBtn = new Button();
         Button treasureBtn = new Button();
         Button bossBtn = new Button();
+
+        backBtn.getStylesheets().add("file:resources/css/mapStyle.css");
+
 
         Image monsterIcon = new Image("file:resources/images/monster.png");
         Image treasureIcon = new Image("file:resources/images/treasure.png");
@@ -111,21 +120,45 @@ public class MainMenu extends Application {
         ImageView bossView = new ImageView(bossIcon);
         ImageView backgroundView = new ImageView(background);
 
-        backBtn.setOnMousePressed(mouseEvent -> primaryStage.setScene(mainMenuScene(primaryStage)));
+        backBtn.setOnMousePressed(mouseEvent -> primaryStage.setScene(new Scene(createContent(primaryStage))));
 
         StackPane layout2 = new StackPane();
-        layout2.getChildren().addAll(backgroundView);
-        layout2.getChildren().add(backBtn);
         StackPane.setAlignment(backBtn, Pos.TOP_RIGHT);
 
-        layout2.getChildren().add(monsterBtn);
         setBtnLocation(monsterView, monsterBtn, -320, -50);
 
-        layout2.getChildren().add(treasureBtn);
         setBtnLocation(treasureView, treasureBtn, 0, -50);
 
-        layout2.getChildren().add(bossBtn);
         setBtnLocation(bossView, bossBtn, 320, -50);
+
+        monsterBtn.setOnAction(e -> {
+            boolean result = PopUpMessages.display("Confirmation Box", "Are you sure?");
+            if (result) {
+                monsterBtn.setDisable(true);
+                primaryStage.setScene(battleScene(primaryStage));
+            }
+        });
+
+        treasureBtn.setOnAction(e -> {
+            Alert alert = new Alert(Alert.AlertType.NONE);
+            ButtonType btnType = new ButtonType("OK");
+            alert.getButtonTypes().setAll(btnType);
+            alert.setHeaderText("What's in the treasure box?");
+            alert.setContentText("You found a new card! !");
+            alert.show();
+            treasureBtn.setDisable(true);
+        });
+
+        bossBtn.setOnAction(e -> {
+            boolean result = PopUpMessages.display("Confirmation Box", "Are you sure?");
+            if (result) {
+                bossBtn.setDisable(true);
+                primaryStage.setScene(battleScene(primaryStage));
+            }
+        });
+
+
+        layout2.getChildren().addAll(backgroundView, backBtn, monsterBtn, treasureBtn, bossBtn);
 
         return new Scene(layout2, 1000, 600);
     }

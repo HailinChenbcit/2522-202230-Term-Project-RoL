@@ -1,10 +1,15 @@
 package ca.bcit.comp2522.termproject.rol;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -87,13 +92,23 @@ public class MainMenu extends Application {
         });
     }
 
-
+    private Scene battleScene(final Stage stage) {
+        StackPane battleGround = new StackPane();
+        Text text = new Text("Battle Ground!");
+        battleGround.getChildren().addAll(text);
+        return new Scene(battleGround, 1000, 600);
+    }
 
     private Scene mapScene(final Stage primaryStage) {
+
         Button backBtn = new Button("Back to Main");
+        backBtn.setId("backBtn");
         Button monsterBtn = new Button();
         Button treasureBtn = new Button();
         Button bossBtn = new Button();
+
+        backBtn.getStylesheets().add("file:resources/css/mapStyle.css");
+
 
         Image monsterIcon = new Image("file:resources/images/monster.png");
         Image treasureIcon = new Image("file:resources/images/treasure.png");
@@ -115,6 +130,33 @@ public class MainMenu extends Application {
         setBtnLocation(treasureView, treasureBtn, 0, -50);
 
         setBtnLocation(bossView, bossBtn, 320, -50);
+
+        monsterBtn.setOnAction(e -> {
+            boolean result = PopUpMessages.display("Confirmation Box", "Are you sure?");
+            if (result) {
+                monsterBtn.setDisable(true);
+                primaryStage.setScene(battleScene(primaryStage));
+            }
+        });
+
+        treasureBtn.setOnAction(e -> {
+            Alert alert = new Alert(Alert.AlertType.NONE);
+            ButtonType btnType = new ButtonType("OK");
+            alert.getButtonTypes().setAll(btnType);
+            alert.setHeaderText("What's in the treasure box?");
+            alert.setContentText("You found a new card! !");
+            alert.show();
+            treasureBtn.setDisable(true);
+        });
+
+        bossBtn.setOnAction(e -> {
+            boolean result = PopUpMessages.display("Confirmation Box", "Are you sure?");
+            if (result) {
+                bossBtn.setDisable(true);
+                primaryStage.setScene(battleScene(primaryStage));
+            }
+        });
+
 
         layout2.getChildren().addAll(backgroundView, backBtn, monsterBtn, treasureBtn, bossBtn);
 

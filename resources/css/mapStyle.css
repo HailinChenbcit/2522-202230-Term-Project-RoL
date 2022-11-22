@@ -1,0 +1,10 @@
+#backBtn:hover {
+    -fx-padding: 8 8 8 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #9b9d9e 0%, #7a7c7d 100%),
+            #7a7c7d,
+            #9b9d9e,
+            radial-gradient(center 50% 50%, radius 100%, #7a7c7d, #9b9d9e);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+}

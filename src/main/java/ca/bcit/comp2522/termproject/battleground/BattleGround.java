@@ -4,7 +4,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Random;
@@ -32,12 +31,15 @@ public class BattleGround {
     }
     public static Scene battleScene(final Stage stage) {
         String randomBackground = String.format("file:resources/images/%s", randomBackground());
+        String randomMonsterImage = String.format("file:resources/images/%s", Monsters.randomMonsterImage());
         Image background = new Image(randomBackground);
+        Image monsterImage = new Image(randomMonsterImage);
+        ImageView monsterView = new ImageView(monsterImage);
         ImageView backgroundView = new ImageView(background);
         backgroundView.setTranslateY(-100);
+        monsterView.setTranslateY(-30);
         StackPane battleGround = new StackPane();
-        Text text = new Text("Battle Ground!");
-        battleGround.getChildren().addAll(backgroundView, text);
+        battleGround.getChildren().addAll(backgroundView, monsterView);
         return new Scene(battleGround, 1520, 820);
     }
 }

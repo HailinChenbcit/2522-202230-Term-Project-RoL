@@ -13,10 +13,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
+import javafx.scene.paint.*;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -50,7 +47,7 @@ public class MainMenu extends Application {
             System.out.println("Cannot load image");
         }
 
-        Title title = new Title("TEEMO TEST");
+        Title title = new Title("Realm of Legends");
         title.setTranslateX(250);
         title.setTranslateY(200);
 
@@ -101,10 +98,10 @@ public class MainMenu extends Application {
         monsterView.setLayoutX(100);
         monsterView.setLayoutY(100);
 
-
         battleGround.getChildren().addAll(text, monsterView);
         return new Scene(battleGround, 1000, 600);
     }
+
 
     private Scene mapScene(final Stage primaryStage) {
 
@@ -121,16 +118,23 @@ public class MainMenu extends Application {
         ImageView bossView = new ImageView(new Image("file:resources/images/boss.png"));
         ImageView backgroundView = new ImageView("file:resources/images/mapBackground.jpg");
 
-        backBtn.setOnMousePressed(mouseEvent -> primaryStage.setScene(new Scene(createContent(primaryStage))));
+//        Line lineOne = new Line();
+////        Line lineTwo = new Line(30, 0, 100,0);
+//        lineOne.setStartX(0);
+//        lineOne.setStartY(0);
+//        lineOne.setEndX(-200);
+//        lineOne.setEndY(0);
+//        lineOne.setStyle("-fx-stroke: DARKGREY;");
+//        lineOne.setStyle("-fx-font-size: 20");
 
         StackPane layout2 = new StackPane();
         StackPane.setAlignment(backBtn, Pos.TOP_RIGHT);
 
         setBtnLocation(monsterView, monsterBtn, -320, -50);
-
         setBtnLocation(treasureView, treasureBtn, 0, -50);
-
         setBtnLocation(bossView, bossBtn, 320, -50);
+
+        backBtn.setOnMousePressed(mouseEvent -> primaryStage.setScene(new Scene(createContent(primaryStage))));
 
         monsterBtn.setOnAction(e -> {
             boolean result = PopUpMessages.display("Confirmation Box", "Are you sure?");
@@ -158,8 +162,7 @@ public class MainMenu extends Application {
             }
         });
 
-
-        layout2.getChildren().addAll(backgroundView, backBtn, monsterBtn, treasureBtn, bossBtn);
+        layout2.getChildren().addAll(backgroundView, backBtn, monsterBtn, treasureBtn, bossBtn, lineOne);
 
         return new Scene(layout2, 1000, 600);
     }
@@ -184,13 +187,13 @@ public class MainMenu extends Application {
          * @param name a string represents title.
          */
         public Title(final String name) {
-            Rectangle bg = new Rectangle(300, 60);
+            Rectangle bg = new Rectangle(400, 60);
             bg.setStroke(Color.WHITESMOKE);
             bg.setStrokeWidth(2);
             bg.setFill(null);
 
             Text text = new Text(name);
-            text.setFill(Color.DARKSLATEGRAY);
+            text.setFill(Color.ALICEBLUE);
             text.setFont(Font.font("Tw Cen MT Condensed", FontWeight.BOLD, 50));
 
             setAlignment(Pos.CENTER);

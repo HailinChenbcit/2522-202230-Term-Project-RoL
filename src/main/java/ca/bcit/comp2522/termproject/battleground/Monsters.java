@@ -3,8 +3,18 @@ package ca.bcit.comp2522.termproject.battleground;
 import java.util.Random;
 
 public class Monsters extends BattleGround {
-    private final int monsterHealth = 20;
-    private final int monsterAttack = 2;
+
+    public static String randomBossImage() {
+        Random rand = new Random();
+        int upperbound = 3;
+        int intRandom = rand.nextInt(upperbound);
+        return switch (intRandom) {
+            case 0 -> "boss1.gif";
+            case 1 -> "boss2.gif";
+            case 2 -> "boss3.gif";
+            default -> "boss4.gif";
+        };
+    }
 
     public static String randomMonsterImage() {
         Random rand = new Random();
@@ -22,11 +32,5 @@ public class Monsters extends BattleGround {
         };
     }
 
-    public int getMonsterHealth() {
-        return monsterHealth;
-    }
-
-    public int getMonsterAttack() {
-        return monsterAttack;
-    }
+    
 }

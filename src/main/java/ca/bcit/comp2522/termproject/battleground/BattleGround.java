@@ -32,14 +32,17 @@ public class BattleGround {
     public static Scene battleScene(final Stage stage) {
         String randomBackground = String.format("file:resources/images/battle_background/%s", randomBackground());
         String randomMonsterImage = String.format("file:resources/images/monster/%s", Monsters.randomMonsterImage());
+        Image monsterHealth = new Image("file:resources/images/healthBar/10HeathBar.png");
         Image background = new Image(randomBackground);
         Image monsterImage = new Image(randomMonsterImage);
+        ImageView monsterHealthView = new ImageView(monsterHealth);
         ImageView monsterView = new ImageView(monsterImage);
         ImageView backgroundView = new ImageView(background);
         backgroundView.setTranslateY(-100);
         monsterView.setTranslateY(-30);
+        monsterHealthView.setTranslateY(-300);
         StackPane battleGround = new StackPane();
-        battleGround.getChildren().addAll(backgroundView, monsterView);
+        battleGround.getChildren().addAll(backgroundView, monsterView, monsterHealthView);
         return new Scene(battleGround, 1520, 820);
     }
 }

@@ -118,14 +118,11 @@ public class MainMenu extends Application {
         ImageView bossView = new ImageView(new Image("file:resources/images/boss.png"));
         ImageView backgroundView = new ImageView("file:resources/images/mapBackground.jpg");
 
-//        Line lineOne = new Line();
-////        Line lineTwo = new Line(30, 0, 100,0);
-//        lineOne.setStartX(0);
-//        lineOne.setStartY(0);
-//        lineOne.setEndX(-200);
-//        lineOne.setEndY(0);
-//        lineOne.setStyle("-fx-stroke: DARKGREY;");
-//        lineOne.setStyle("-fx-font-size: 20");
+        Line line = new Line(-500, -200, 100,-200);
+        line.setStroke(Color.DARKGREY);
+        line.setStrokeWidth(10);
+        line.setStyle("-fx-line: 20");
+        line.getStrokeDashArray().addAll(2d, 21d);
 
         StackPane layout2 = new StackPane();
         StackPane.setAlignment(backBtn, Pos.TOP_RIGHT);
@@ -162,7 +159,7 @@ public class MainMenu extends Application {
             }
         });
 
-        layout2.getChildren().addAll(backgroundView, backBtn, monsterBtn, treasureBtn, bossBtn, lineOne);
+        layout2.getChildren().addAll(backgroundView, backBtn, monsterBtn, treasureBtn, bossBtn, line);
 
         return new Scene(layout2, 1000, 600);
     }

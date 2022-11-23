@@ -30,8 +30,8 @@ public class BattleGround {
         };
     }
     public static Scene battleScene(final Stage stage) {
-        String randomBackground = String.format("file:resources/images/%s", randomBackground());
-        String randomMonsterImage = String.format("file:resources/images/%s", Monsters.randomMonsterImage());
+        String randomBackground = String.format("file:resources/images/battle_background/%s", randomBackground());
+        String randomMonsterImage = String.format("file:resources/images/monster/%s", Monsters.randomMonsterImage());
         Image background = new Image(randomBackground);
         Image monsterImage = new Image(randomMonsterImage);
         ImageView monsterView = new ImageView(monsterImage);

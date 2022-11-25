@@ -144,7 +144,7 @@ public class MainMenu extends Application {
             boolean result = PopUpMessages.display("Confirmation Box", "Are you sure?");
             if (result) {
                 bossBtn.setDisable(true);
-                primaryStage.setScene(BattleGround.battleMonsterScene(primaryStage));
+                primaryStage.setScene(BattleGround.battleBossScene(primaryStage));
             }
         });
 

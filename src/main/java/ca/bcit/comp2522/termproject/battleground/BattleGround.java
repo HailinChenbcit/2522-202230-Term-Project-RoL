@@ -16,7 +16,7 @@ import java.util.Random;
  * @version 0.1
  */
 public class BattleGround {
-    private static int hpStatus = 10;
+    private static int monsterHp = 10;
 
     private static String randomBackground() {
         Random rand = new Random();
@@ -33,8 +33,8 @@ public class BattleGround {
         };
     }
 
-    public static Scene update(final String randomBackground, final String randomMonsterImage, Stage stage) {
-        Image monsterHealth = new Image("file:resources/images/healthBar/HealthBar" + hpStatus + ".png");
+    public static Scene updateMonsterFight(final String randomBackground, final String randomMonsterImage, Stage stage) {
+        Image monsterHealth = new Image("file:resources/images/healthBar/HealthBar" + monsterHp + ".png");
         Image background = new Image(randomBackground);
         Image monsterImage = new Image(randomMonsterImage);
 
@@ -52,20 +52,20 @@ public class BattleGround {
         StackPane battleGround = new StackPane();
         battleGround.getChildren().addAll(backgroundView, monsterView, monsterHealthView, atkBtn);
 
-        if (hpStatus != 0) {
+        if (monsterHp != 0) {
             atkBtn.setOnMousePressed(mouseEvent -> {
-                hpStatus -= 1;
-                stage.setScene(update( randomBackground, randomMonsterImage, stage));
+                monsterHp -= 1;
+                stage.setScene(updateMonsterFight( randomBackground, randomMonsterImage, stage));
             });
         }
         return new Scene(battleGround, 1520, 820);
 
     }
 
-    public static Scene battleScene(final Stage stage) {
+    public static Scene battleMonsterScene(final Stage stage) {
         String randomBackground = String.format("file:resources/images/battle_background/%s", randomBackground());
         String randomMonsterImage = String.format("file:resources/images/monster/%s", Monsters.randomMonsterImage());
 
-        return update(randomBackground, randomMonsterImage, stage);
+        return updateMonsterFight(randomBackground, randomMonsterImage, stage);
     }
 }

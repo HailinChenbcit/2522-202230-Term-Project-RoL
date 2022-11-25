@@ -2,15 +2,12 @@ package ca.bcit.comp2522.termproject.rol;
 
 import ca.bcit.comp2522.termproject.battleground.BattleGround;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -129,7 +126,7 @@ public class MainMenu extends Application {
             boolean result = PopUpMessages.display("Confirmation Box", "Are you sure?");
             if (result) {
                 monsterBtn.setDisable(true);
-                primaryStage.setScene(BattleGround.battleScene(primaryStage));
+                primaryStage.setScene(BattleGround.battleMonsterScene(primaryStage));
             }
         });
 
@@ -147,7 +144,7 @@ public class MainMenu extends Application {
             boolean result = PopUpMessages.display("Confirmation Box", "Are you sure?");
             if (result) {
                 bossBtn.setDisable(true);
-                primaryStage.setScene(BattleGround.battleScene(primaryStage));
+                primaryStage.setScene(BattleGround.battleMonsterScene(primaryStage));
             }
         });
 

@@ -4,7 +4,9 @@ import java.util.Random;
 
 public class Monsters extends BattleGround {
 
-    public static String randomBossImage() {
+    static String monsterImage;
+
+    protected static String randomBossImage() {
         Random rand = new Random();
         int upperbound = 3;
         int intRandom = rand.nextInt(upperbound);
@@ -16,11 +18,11 @@ public class Monsters extends BattleGround {
         };
     }
 
-    public static String randomMonsterImage() {
+    protected static String randomMonsterImage() {
         Random rand = new Random();
         int upperbound = 7;
         int intRandom = rand.nextInt(upperbound);
-        return switch (intRandom) {
+        monsterImage = switch (intRandom) {
             case 0 -> "armorGuyBattleAxe.gif";
             case 1 -> "armorGuyShield.gif";
             case 2 -> "armorRat.gif";
@@ -30,7 +32,6 @@ public class Monsters extends BattleGround {
             case 6 -> "dinosaur.gif";
             default -> "monkRat.gif";
         };
+        return monsterImage;
     }
-
-    
 }

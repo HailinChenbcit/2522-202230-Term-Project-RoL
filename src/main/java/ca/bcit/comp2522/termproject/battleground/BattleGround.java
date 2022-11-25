@@ -1,8 +1,5 @@
 package ca.bcit.comp2522.termproject.battleground;
 
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -36,16 +33,10 @@ public class BattleGround {
         };
     }
 
-    public static Scene battleScene(final Stage stage) {
-//        String randomBackground = String.format("file:resources/images/battle_background/%s", randomBackground());
-//        String randomMonsterImage = String.format("file:resources/images/monster/%s", Monsters.randomMonsterImage());
-
+    public static Scene update(final String randomBackground, final String randomMonsterImage, Stage stage) {
         Image monsterHealth = new Image("file:resources/images/healthBar/HealthBar" + hpStatus + ".png");
-//        Image background = new Image(randomBackground);
-//        Image monsterImage = new Image(randomMonsterImage);
-
-        Image background = new Image("file:resources/images/battle_background/dungeon_background1.png");
-        Image monsterImage = new Image("file:resources/images/monster/armorGuyBattleAxe.gif");
+        Image background = new Image(randomBackground);
+        Image monsterImage = new Image(randomMonsterImage);
 
         ImageView monsterHealthView = new ImageView(monsterHealth);
         ImageView monsterView = new ImageView(monsterImage);
@@ -64,10 +55,17 @@ public class BattleGround {
         if (hpStatus != 0) {
             atkBtn.setOnMousePressed(mouseEvent -> {
                 hpStatus -= 1;
-                stage.setScene(battleScene(stage));
+                stage.setScene(update( randomBackground, randomMonsterImage, stage));
             });
         }
-
         return new Scene(battleGround, 1520, 820);
+
+    }
+
+    public static Scene battleScene(final Stage stage) {
+        String randomBackground = String.format("file:resources/images/battle_background/%s", randomBackground());
+        String randomMonsterImage = String.format("file:resources/images/monster/%s", Monsters.randomMonsterImage());
+
+        return update(randomBackground, randomMonsterImage, stage);
     }
 }

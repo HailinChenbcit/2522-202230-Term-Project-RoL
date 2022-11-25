@@ -21,11 +21,13 @@ import java.util.Random;
 public class BattleGround {
     private static int hpStatus = 10;
 
+    private static String backgroundImage;
+
     private static String randomBackground() {
         Random rand = new Random();
         int upperbound = 6;
         int intRandom = rand.nextInt(upperbound);
-        return switch (intRandom) {
+        backgroundImage = switch (intRandom) {
             case 0 -> "dungeon_background1.png";
             case 1 -> "dungeon_background2.png";
             case 2 -> "dungeon_background3.png";
@@ -34,18 +36,13 @@ public class BattleGround {
             case 5 -> "dungeon_background6.png";
             default -> "dungeon_background7.png";
         };
+        return backgroundImage;
     }
 
-    public static Scene battleScene(final Stage stage) {
-//        String randomBackground = String.format("file:resources/images/battle_background/%s", randomBackground());
-//        String randomMonsterImage = String.format("file:resources/images/monster/%s", Monsters.randomMonsterImage());
-
+    public static Scene update(final String randomBackground, final String randomMonsterImage, Stage stage) {
         Image monsterHealth = new Image("file:resources/images/healthBar/HealthBar" + hpStatus + ".png");
-//        Image background = new Image(randomBackground);
-//        Image monsterImage = new Image(randomMonsterImage);
-
-        Image background = new Image("file:resources/images/battle_background/dungeon_background1.png");
-        Image monsterImage = new Image("file:resources/images/monster/armorGuyBattleAxe.gif");
+        Image background = new Image(randomBackground);
+        Image monsterImage = new Image(randomMonsterImage);
 
         ImageView monsterHealthView = new ImageView(monsterHealth);
         ImageView monsterView = new ImageView(monsterImage);
@@ -64,10 +61,26 @@ public class BattleGround {
         if (hpStatus != 0) {
             atkBtn.setOnMousePressed(mouseEvent -> {
                 hpStatus -= 1;
-                stage.setScene(battleScene(stage));
+                stage.setScene(update( randomBackground, randomMonsterImage, stage));
             });
         }
-
         return new Scene(battleGround, 1520, 820);
+
+    }
+
+    public static Scene battleScene(final Stage stage) {
+        String randomBackground = String.format("file:resources/images/battle_background/%s", randomBackground());
+        String randomMonsterImage = String.format("file:resources/images/monster/%s", Monsters.randomMonsterImage());
+
+        return update(randomBackground, randomMonsterImage, stage);
+//        stage.setScene(sc);
+    }
+
+    public static String getBackgroundImage() {
+        return backgroundImage;
+    }
+
+    public static void setBackgroundImage(String backgroundImage) {
+        BattleGround.backgroundImage = backgroundImage;
     }
 }

@@ -34,12 +34,4 @@ public class Monsters extends BattleGround {
         };
         return monsterImage;
     }
-
-    public static String getMonsterImage() {
-        return monsterImage;
-    }
-
-    public static void setMonsterImage(String monsterImage) {
-        Monsters.monsterImage = monsterImage;
-    }
 }

@@ -1,8 +1,5 @@
 package ca.bcit.comp2522.termproject.battleground;
 
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -21,13 +18,11 @@ import java.util.Random;
 public class BattleGround {
     private static int hpStatus = 10;
 
-    private static String backgroundImage;
-
     private static String randomBackground() {
         Random rand = new Random();
         int upperbound = 6;
         int intRandom = rand.nextInt(upperbound);
-        backgroundImage = switch (intRandom) {
+        return switch (intRandom) {
             case 0 -> "dungeon_background1.png";
             case 1 -> "dungeon_background2.png";
             case 2 -> "dungeon_background3.png";
@@ -36,7 +31,6 @@ public class BattleGround {
             case 5 -> "dungeon_background6.png";
             default -> "dungeon_background7.png";
         };
-        return backgroundImage;
     }
 
     public static Scene update(final String randomBackground, final String randomMonsterImage, Stage stage) {
@@ -73,14 +67,5 @@ public class BattleGround {
         String randomMonsterImage = String.format("file:resources/images/monster/%s", Monsters.randomMonsterImage());
 
         return update(randomBackground, randomMonsterImage, stage);
-//        stage.setScene(sc);
-    }
-
-    public static String getBackgroundImage() {
-        return backgroundImage;
-    }
-
-    public static void setBackgroundImage(String backgroundImage) {
-        BattleGround.backgroundImage = backgroundImage;
     }
 }

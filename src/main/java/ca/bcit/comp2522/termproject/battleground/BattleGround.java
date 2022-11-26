@@ -20,10 +20,7 @@ import java.util.Random;
  * @version 0.1
  */
 public class BattleGround {
-    private static int monsterHp = 10;
-
-    private static int bossHp = 10;
-
+    private static int mobHp = 10;
     private static int playerHp = 100;
 
     private static String randomMonsterBackground() {
@@ -52,14 +49,14 @@ public class BattleGround {
         };
     }
 
-    public static Scene updateMonsterFight(final String randomMonsterBackground, final String randomMonsterImage, Stage stage) {
-        Image monsterHealth = new Image("file:resources/images/healthBar/HealthBar" + monsterHp + ".png");
+    public static Scene updateBattleFight(final String randomMobBackground, final String randomMobImage, Stage stage) {
+        Image mobHealth = new Image("file:resources/images/healthBar/HealthBar" + mobHp + ".png");
         Image playerHealth = new Image("file:resources/images/healthBar/playerHealthIcon.png");
-        Image background = new Image(randomMonsterBackground);
-        Image monsterImage = new Image(randomMonsterImage);
+        Image background = new Image(randomMobBackground);
+        Image mobImage = new Image(randomMobImage);
 
-        ImageView monsterHealthView = new ImageView(monsterHealth);
-        ImageView monsterView = new ImageView(monsterImage);
+        ImageView mobHealthView = new ImageView(mobHealth);
+        ImageView mobView = new ImageView(mobImage);
         ImageView backgroundView = new ImageView(background);
         ImageView playerHealthView = new ImageView(playerHealth);
 
@@ -68,8 +65,8 @@ public class BattleGround {
         healthLabel.setFont(Font.font("Times New Roman", FontWeight.BOLD, 20));
 
         backgroundView.setTranslateY(-100);
-        monsterView.setTranslateY(-30);
-        monsterHealthView.setTranslateY(-300);
+        mobView.setTranslateY(-30);
+        mobHealthView.setTranslateY(-300);
         playerHealthView.setTranslateY(210);
         playerHealthView.setTranslateX(-650);
         healthLabel.setTranslateY(210);
@@ -79,53 +76,13 @@ public class BattleGround {
         atkBtn.setTranslateY(300);
 
         StackPane battleGround = new StackPane();
-        battleGround.getChildren().addAll(backgroundView, monsterView, monsterHealthView, atkBtn, playerHealthView, healthLabel);
+        battleGround.getChildren().addAll(backgroundView, mobView, mobHealthView, atkBtn, playerHealthView, healthLabel);
 
-        if (monsterHp != 0) {
+        if (mobHp != 0) {
             atkBtn.setOnMousePressed(mouseEvent -> {
-                monsterHp--;
+                mobHp--;
                 playerHp--;
-                stage.setScene(updateMonsterFight( randomMonsterBackground, randomMonsterImage, stage));
-            });
-        }
-        return new Scene(battleGround, 1520, 820);
-    }
-
-    public static Scene updateBossFight(final String randomBossBackground, final String randomBossImage, Stage stage) {
-        Image bossHealth = new Image("file:resources/images/healthBar/HealthBar" + bossHp + ".png");
-        Image playerHealth = new Image("file:resources/images/healthBar/playerHealthIcon.png");
-        Image bossBackground = new Image(randomBossBackground);
-        Image bossImage = new Image(randomBossImage);
-
-        ImageView bossHealthView = new ImageView(bossHealth);
-        ImageView bossView = new ImageView(bossImage);
-        ImageView backgroundView = new ImageView(bossBackground);
-        ImageView playerHealthView = new ImageView(playerHealth);
-
-        Label healthLabel = new Label(": " + playerHp);
-        healthLabel.setTextFill(Color.web("#FFFFFF"));
-        healthLabel.setFont(Font.font("Times New Roman", FontWeight.BOLD, 20));
-
-
-        backgroundView.setTranslateY(-100);
-        bossView.setTranslateY(-30);
-        bossHealthView.setTranslateY(-300);
-        playerHealthView.setTranslateY(210);
-        playerHealthView.setTranslateX(-650);
-        healthLabel.setTranslateY(210);
-        healthLabel.setTranslateX(-598);
-
-
-        Button atkBtn = new Button("Some card to attack");
-        atkBtn.setTranslateY(300);
-
-        StackPane battleGround = new StackPane();
-        battleGround.getChildren().addAll(backgroundView, bossView, bossHealthView, atkBtn, playerHealthView, healthLabel);
-
-        if (bossHp != 0) {
-            atkBtn.setOnMousePressed(mouseEvent -> {
-                bossHp--;
-                stage.setScene(updateMonsterFight( randomBossBackground, randomBossImage, stage));
+                stage.setScene(updateBattleFight( randomMobBackground, randomMobImage, stage));
             });
         }
         return new Scene(battleGround, 1520, 820);
@@ -135,13 +92,13 @@ public class BattleGround {
         String randomBackground = String.format("file:resources/images/battle_background/%s", randomMonsterBackground());
         String randomMonsterImage = String.format("file:resources/images/monster/%s", Monsters.randomMonsterImage());
 
-        return updateMonsterFight(randomBackground, randomMonsterImage, stage);
+        return updateBattleFight(randomBackground, randomMonsterImage, stage);
     }
 
     public static Scene battleBossScene(final Stage stage) {
         String randomBackground = String.format("file:resources/images/battle_background/%s", randomBossBackground());
         String randomBossImage = String.format("file:resources/images/boss/%s", Monsters.randomBossImage());
 
-        return updateBossFight(randomBackground, randomBossImage, stage);
+        return updateBattleFight(randomBackground, randomBossImage, stage);
     }
 }

@@ -1,8 +1,5 @@
 package ca.bcit.comp2522.termproject.battleground;
 
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -21,6 +18,8 @@ import java.util.Random;
 public class BattleGround {
     private static int hpStatus = 10;
 
+    private static int bossHp = 10;
+
     private static String randomBackground() {
         Random rand = new Random();
         int upperbound = 6;
@@ -36,16 +35,10 @@ public class BattleGround {
         };
     }
 
-    public static Scene battleScene(final Stage stage) {
-//        String randomBackground = String.format("file:resources/images/battle_background/%s", randomBackground());
-//        String randomMonsterImage = String.format("file:resources/images/monster/%s", Monsters.randomMonsterImage());
-
+    public static Scene update(final String randomBackground, final String randomMonsterImage, Stage stage) {
         Image monsterHealth = new Image("file:resources/images/healthBar/HealthBar" + hpStatus + ".png");
-//        Image background = new Image(randomBackground);
-//        Image monsterImage = new Image(randomMonsterImage);
-
-        Image background = new Image("file:resources/images/battle_background/dungeon_background1.png");
-        Image monsterImage = new Image("file:resources/images/monster/armorGuyBattleAxe.gif");
+        Image background = new Image(randomBackground);
+        Image monsterImage = new Image(randomMonsterImage);
 
         ImageView monsterHealthView = new ImageView(monsterHealth);
         ImageView monsterView = new ImageView(monsterImage);
@@ -64,10 +57,53 @@ public class BattleGround {
         if (hpStatus != 0) {
             atkBtn.setOnMousePressed(mouseEvent -> {
                 hpStatus -= 1;
-                stage.setScene(battleScene(stage));
+                stage.setScene(update( randomBackground, randomMonsterImage, stage));
             });
         }
-
         return new Scene(battleGround, 1520, 820);
+
+    }
+
+    public static Scene updateBossFight(final String randomBackground, final String randomBossImage, Stage stage) {
+        Image bossHealth = new Image("file:resources/images/healthBar/HealthBar" + bossHp + ".png");
+        Image background = new Image(randomBackground);
+        Image bossImage = new Image(randomBossImage);
+
+        ImageView monsterView = new ImageView(bossImage);
+        ImageView backgroundView = new ImageView(background);
+        ImageView bossHealthView = new ImageView(bossHealth);
+
+        backgroundView.setTranslateY(-100);
+        monsterView.setTranslateY(-30);
+        bossHealthView.setTranslateY(-300);
+
+        Button atkBtn = new Button("Some card to attack");
+        atkBtn.setTranslateY(300);
+
+        StackPane battleGround = new StackPane();
+        battleGround.getChildren().addAll(backgroundView, monsterView, bossHealthView, atkBtn);
+
+        if (bossHp != 0) {
+            atkBtn.setOnMousePressed(mouseEvent -> {
+                bossHp -= 1;
+                stage.setScene(updateBossFight( randomBackground, randomBossImage, stage));
+            });
+        }
+        return new Scene(battleGround, 1520, 820);
+
+    }
+
+    public static Scene battleScene(final Stage stage) {
+        String randomBackground = String.format("file:resources/images/battle_background/%s", randomBackground());
+        String randomMonsterImage = String.format("file:resources/images/monster/%s", Monsters.randomMonsterImage());
+
+        return update(randomBackground, randomMonsterImage, stage);
+    }
+
+    public static Scene battleBossScene(final Stage stage) {
+        String randomBackground = String.format("file:resources/images/battle_background/%s", randomBackground());
+        String randomBossImage = String.format("file:resources/images/boss/%s", Monsters.randomBossImage());
+
+        return updateBossFight(randomBackground, randomBossImage, stage);
     }
 }

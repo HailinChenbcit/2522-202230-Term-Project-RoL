@@ -23,10 +23,6 @@ public class BattleGround {
     private static int mobHp = 10;
     private static int playerHp = 100;
 
-    private static int bossHp = 10;
-
-    private static String randomBackground() {
-
     private static String randomMonsterBackground() {
         Random rand = new Random();
         int upperbound = 6;
@@ -92,39 +88,6 @@ public class BattleGround {
         return new Scene(battleGround, 1520, 820);
     }
 
-
-    public static Scene updateBossFight(final String randomBackground, final String randomBossImage, Stage stage) {
-        Image bossHealth = new Image("file:resources/images/healthBar/HealthBar" + bossHp + ".png");
-        Image background = new Image(randomBackground);
-        Image bossImage = new Image(randomBossImage);
-
-        ImageView monsterView = new ImageView(bossImage);
-        ImageView backgroundView = new ImageView(background);
-        ImageView bossHealthView = new ImageView(bossHealth);
-
-        backgroundView.setTranslateY(-100);
-        monsterView.setTranslateY(-30);
-        bossHealthView.setTranslateY(-300);
-
-        Button atkBtn = new Button("Some card to attack");
-        atkBtn.setTranslateY(300);
-
-        StackPane battleGround = new StackPane();
-        battleGround.getChildren().addAll(backgroundView, monsterView, bossHealthView, atkBtn);
-
-        if (bossHp != 0) {
-            atkBtn.setOnMousePressed(mouseEvent -> {
-                bossHp -= 1;
-                stage.setScene(updateBossFight( randomBackground, randomBossImage, stage));
-            });
-        }
-        return new Scene(battleGround, 1520, 820);
-
-    }
-
-    public static Scene battleScene(final Stage stage) {
-        String randomBackground = String.format("file:resources/images/battle_background/%s", randomBackground());
-
     public static Scene battleMonsterScene(final Stage stage) {
         String randomBackground = String.format("file:resources/images/battle_background/%s", randomMonsterBackground());
 
@@ -138,12 +101,5 @@ public class BattleGround {
         String randomBossImage = String.format("file:resources/images/boss/%s", Monsters.randomBossImage());
 
         return updateBattleFight(randomBackground, randomBossImage, stage);
-    }
-
-    public static Scene battleBossScene(final Stage stage) {
-        String randomBackground = String.format("file:resources/images/battle_background/%s", randomBackground());
-        String randomBossImage = String.format("file:resources/images/boss/%s", Monsters.randomBossImage());
-
-        return updateBossFight(randomBackground, randomBossImage, stage);
     }
 }

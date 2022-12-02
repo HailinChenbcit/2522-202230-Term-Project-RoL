@@ -102,4 +102,8 @@ public class BattleGround {
 
         return updateBattleFight(randomBackground, randomBossImage, stage);
     }
+
+    public static void setMobHp(final int mobHp) {
+        BattleGround.mobHp = mobHp;
+    }
 }

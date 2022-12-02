@@ -127,6 +127,7 @@ public class MainMenu extends Application {
             if (result) {
                 monsterBtn.setDisable(true);
                 primaryStage.setScene(BattleGround.battleMonsterScene(primaryStage));
+                BattleGround.setMobHp(10);
             }
         });
 
@@ -145,6 +146,7 @@ public class MainMenu extends Application {
             if (result) {
                 bossBtn.setDisable(true);
                 primaryStage.setScene(BattleGround.battleBossScene(primaryStage));
+                BattleGround.setMobHp(100);
             }
         });
 

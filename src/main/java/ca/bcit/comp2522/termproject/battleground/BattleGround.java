@@ -12,6 +12,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * BattleGround Class.
@@ -22,11 +23,17 @@ import java.util.Random;
 public class BattleGround {
     private static int mobHp = 10;
     private static int playerHp = 100;
+    private static boolean isBoss = true;
+
+    private static int playerAttackUpper = 11;
+
+    private static int playerAttackLower = 5;
+    private static int mobUpperBound = 11;
+    private static int mobLowerBound = 1;
 
     private static String randomMonsterBackground() {
         Random rand = new Random();
-        int upperbound = 6;
-        int intRandom = rand.nextInt(upperbound);
+        int intRandom = rand.nextInt(6);
         return switch (intRandom) {
             case 0 -> "dungeon_background1.png";
             case 1 -> "dungeon_background2.png";
@@ -40,14 +47,27 @@ public class BattleGround {
 
     private static String randomBossBackground() {
         Random rand = new Random();
-        int upperbound = 2;
-        int intRandom = rand.nextInt(upperbound);
+        int intRandom = rand.nextInt(2);
         return switch (intRandom) {
             case 0 -> "boss_background1.png";
             case 1 -> "boss_background3.png";
             default -> "boss_background2.png";
         };
     }
+
+    private static void battleInteraction() {
+        int randomPlayerAttack = ThreadLocalRandom.current().nextInt(playerAttackLower, playerAttackUpper);
+        int randomMobAttack = ThreadLocalRandom.current().nextInt(mobLowerBound, mobUpperBound);
+        if (isBoss) {
+            playerHp -= randomMobAttack;
+            mobHp -= randomPlayerAttack;
+        } else {
+            playerHp -= randomMobAttack;
+            mobHp -= randomPlayerAttack;
+        }
+    }
+
+
 
     public static Scene updateBattleFight(final String randomMobBackground, final String randomMobImage, Stage stage) {
         Image mobHealth = new Image("file:resources/images/healthBar/HealthBar" + mobHp + ".png");
@@ -78,11 +98,10 @@ public class BattleGround {
         StackPane battleGround = new StackPane();
         battleGround.getChildren().addAll(backgroundView, mobView, mobHealthView, atkBtn, playerHealthView, healthLabel);
 
-        if (mobHp != 0) {
+        if (mobHp > 0) {
             atkBtn.setOnMousePressed(mouseEvent -> {
-                mobHp--;
-                playerHp--;
-                stage.setScene(updateBattleFight( randomMobBackground, randomMobImage, stage));
+                battleInteraction();
+                stage.setScene(updateBattleFight(randomMobBackground, randomMobImage, stage));
             });
         }
         return new Scene(battleGround, 1520, 820);
@@ -90,7 +109,6 @@ public class BattleGround {
 
     public static Scene battleMonsterScene(final Stage stage) {
         String randomBackground = String.format("file:resources/images/battle_background/%s", randomMonsterBackground());
-
         String randomMonsterImage = String.format("file:resources/images/monster/%s", Monsters.randomMonsterImage());
 
         return updateBattleFight(randomBackground, randomMonsterImage, stage);
@@ -105,5 +123,9 @@ public class BattleGround {
 
     public static void setMobHp(final int mobHp) {
         BattleGround.mobHp = mobHp;
+    }
+
+    public static void setIsBoss(boolean isBoss) {
+        BattleGround.isBoss = isBoss;
     }
 }

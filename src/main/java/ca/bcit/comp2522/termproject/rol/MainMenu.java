@@ -125,9 +125,10 @@ public class MainMenu extends Application {
         monsterBtn.setOnAction(e -> {
             boolean result = PopUpMessages.display("Confirmation Box", "Are you sure?");
             if (result) {
+                BattleGround.setMobHp(10);
+                BattleGround.setIsBoss(false);
                 monsterBtn.setDisable(true);
                 primaryStage.setScene(BattleGround.battleMonsterScene(primaryStage));
-                BattleGround.setMobHp(10);
             }
         });
 
@@ -144,9 +145,10 @@ public class MainMenu extends Application {
         bossBtn.setOnAction(e -> {
             boolean result = PopUpMessages.display("Confirmation Box", "Are you sure?");
             if (result) {
+                BattleGround.setMobHp(100);
+                BattleGround.setIsBoss(true);
                 bossBtn.setDisable(true);
                 primaryStage.setScene(BattleGround.battleBossScene(primaryStage));
-                BattleGround.setMobHp(100);
             }
         });
 

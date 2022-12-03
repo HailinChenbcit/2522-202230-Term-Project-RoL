@@ -23,13 +23,13 @@ import java.util.concurrent.ThreadLocalRandom;
 public class BattleGround {
     private static int mobHp = 10;
     private static int playerHp = 100;
-    private static boolean isBoss = true;
-
     private static int playerAttackUpper = 11;
 
     private static int playerAttackLower = 5;
     private static int mobUpperBound = 11;
     private static int mobLowerBound = 1;
+
+    private static boolean isBoss = true;
 
     private static String randomMonsterBackground() {
         Random rand = new Random();
@@ -58,19 +58,68 @@ public class BattleGround {
     private static void battleInteraction() {
         int randomPlayerAttack = ThreadLocalRandom.current().nextInt(playerAttackLower, playerAttackUpper);
         int randomMobAttack = ThreadLocalRandom.current().nextInt(mobLowerBound, mobUpperBound);
+        playerHp -= randomMobAttack;
+        mobHp -= randomPlayerAttack;
+    }
+
+    private static int monsterHealthChecker() {
+        if (mobHp <= 0) {
+            return 0;
+        } else if (mobHp <= 5) {
+            return 1;
+        } else if (mobHp <= 10) {
+            return 2;
+        } else if (mobHp <= 15) {
+            return 3;
+        } else if (mobHp <= 20) {
+            return 4;
+        } else if (mobHp <= 25) {
+            return 5;
+        } else if (mobHp <= 30) {
+            return 6;
+        } else if (mobHp <= 35) {
+            return 7;
+        } else if (mobHp <= 40) {
+            return 8;
+        } else if (mobHp <= 45) {
+            return 9;
+        }
+        return 10;
+    }
+
+    private static int mobHealthChecker() {
         if (isBoss) {
-            playerHp -= randomMobAttack;
-            mobHp -= randomPlayerAttack;
+            if (mobHp <= 0) {
+                return 0;
+            } else if (mobHp <= 10) {
+                return 1;
+            } else if (mobHp <= 20) {
+                return 2;
+            } else if (mobHp <= 30) {
+                return 3;
+            } else if (mobHp <= 40) {
+                return 4;
+            } else if (mobHp <= 50) {
+                return 5;
+            } else if (mobHp <= 60) {
+                return 6;
+            } else if (mobHp <= 70) {
+                return 7;
+            } else if (mobHp <= 80) {
+                return 8;
+            } else if (mobHp <= 90) {
+                return 9;
+            }
+            return 10;
         } else {
-            playerHp -= randomMobAttack;
-            mobHp -= randomPlayerAttack;
+            return monsterHealthChecker();
         }
     }
 
 
 
     public static Scene updateBattleFight(final String randomMobBackground, final String randomMobImage, Stage stage) {
-        Image mobHealth = new Image("file:resources/images/healthBar/HealthBar" + mobHp + ".png");
+        Image mobHealth = new Image("file:resources/images/healthBar/HealthBar" + mobHealthChecker() + ".png");
         Image playerHealth = new Image("file:resources/images/healthBar/playerHealthIcon.png");
         Image background = new Image(randomMobBackground);
         Image mobImage = new Image(randomMobImage);
@@ -123,6 +172,22 @@ public class BattleGround {
 
     public static void setMobHp(final int mobHp) {
         BattleGround.mobHp = mobHp;
+    }
+
+    public static void setPlayerAttackUpper(int playerAttackUpper) {
+        BattleGround.playerAttackUpper = playerAttackUpper;
+    }
+
+    public static void setPlayerAttackLower(int playerAttackLower) {
+        BattleGround.playerAttackLower = playerAttackLower;
+    }
+
+    public static void setMobUpperBound(int mobUpperBound) {
+        BattleGround.mobUpperBound = mobUpperBound;
+    }
+
+    public static void setMobLowerBound(int mobLowerBound) {
+        BattleGround.mobLowerBound = mobLowerBound;
     }
 
     public static void setIsBoss(boolean isBoss) {

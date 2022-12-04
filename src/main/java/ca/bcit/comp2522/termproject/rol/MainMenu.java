@@ -94,7 +94,7 @@ public class MainMenu extends Application {
          * @param name a string represents title.
          */
         Title(final String name) {
-            Rectangle bg = new Rectangle(400, 60);
+            Rectangle bg = new Rectangle(300, 60);
             bg.setStroke(Color.WHITESMOKE);
             bg.setStrokeWidth(2);
             bg.setFill(null);

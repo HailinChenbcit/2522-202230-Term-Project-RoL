@@ -20,7 +20,6 @@ import javafx.stage.Stage;
  * @version 0.1
  */
 public class GameMap {
-
     private static void setBtnLocation(final ImageView view, final Button button, final int xCord) {
         button.setTranslateX(xCord);
         button.setTranslateY(-50);
@@ -32,6 +31,12 @@ public class GameMap {
             }
         });
     }
+
+    /**
+     * Create a map scene for user.
+     * @param primaryStage stage from mainMenu.
+     * @return a Scene
+     */
     public static Scene mapScene(final Stage primaryStage) {
 
         Button backBtn = new Button("Back to Main");
@@ -41,7 +46,6 @@ public class GameMap {
         Button bossBtn = new Button();
 
         backBtn.getStylesheets().add("file:resources/css/mapStyle.css");
-
 
         Image monsterIcon = new Image("file:resources/images/monster.png");
         Image treasureIcon = new Image("file:resources/images/treasure.png");
@@ -100,7 +104,6 @@ public class GameMap {
                 primaryStage.setScene(BattleGround.battleBossScene(primaryStage));
             }
         });
-
 
         layout2.getChildren().addAll(backgroundView, backBtn, monsterBtn, treasureBtn, bossBtn);
 

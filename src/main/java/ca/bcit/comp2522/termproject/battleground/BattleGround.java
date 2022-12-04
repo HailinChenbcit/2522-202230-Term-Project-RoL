@@ -31,7 +31,9 @@ public class BattleGround {
     private static int mobUpperBound = 11;
     private static int mobLowerBound = 1;
     private static boolean isBoss = true;
-
+    /*
+        Randomize background for each battleground.
+     */
     private static String randomMonsterBackground() {
         Random rand = new Random();
         int intRandom = rand.nextInt(6);
@@ -55,7 +57,9 @@ public class BattleGround {
             default -> "boss_background2.png";
         };
     }
-
+    /*
+        Randomize hit stats during battle.
+     */
     private static void battleInteraction() {
         int randomPlayerAttack = ThreadLocalRandom.current().nextInt(playerAttackLower, playerAttackUpper);
         int randomMobAttack = ThreadLocalRandom.current().nextInt(mobLowerBound, mobUpperBound);
@@ -66,7 +70,9 @@ public class BattleGround {
             System.exit(0);
         }
     }
-
+    /*
+        Check monster current health.
+     */
     private static int monsterHealthChecker() {
         if (mobHp <= 0) {
             return 0;
@@ -91,7 +97,9 @@ public class BattleGround {
         }
         return 10;
     }
-
+    /*
+        Check boss current health.
+     */
     private static int mobHealthChecker() {
         if (isBoss) {
             if (mobHp <= 0) {
@@ -122,8 +130,15 @@ public class BattleGround {
     }
 
 
-
-    public static Scene updateBattleFight(final String randomMobBackground, final String randomMobImage, Stage stage) {
+    /**
+     * Creates scene during battle.
+     * @param randomMobBackground a string represents boss background
+     * @param randomMobImage a string represents boss image
+     * @param stage main stage.
+     * @return a new scene
+     */
+    public static Scene updateBattleFight(final String randomMobBackground, final String randomMobImage,
+                                          final Stage stage) {
         Image mobHealth = new Image("file:resources/images/healthBar/HealthBar" + mobHealthChecker() + ".png");
         Image playerHealth = new Image("file:resources/images/healthBar/playerHealthIcon.png");
         Image background = new Image(randomMobBackground);
@@ -190,6 +205,11 @@ public class BattleGround {
         return new Scene(battleGround, 1520, 820);
     }
 
+    /**
+     * Chooses monster image and background image randomly.
+     * @param stage main stage.
+     * @return a new scene.
+     */
     public static Scene battleMonsterScene(final Stage stage) {
         String randomBackground = String.format("file:resources/images/battle_background/%s", randomMonsterBackground());
         String randomMonsterImage = String.format("file:resources/images/monster/%s", Monsters.randomMonsterImage());
@@ -197,6 +217,11 @@ public class BattleGround {
         return updateBattleFight(randomBackground, randomMonsterImage, stage);
     }
 
+    /**
+     * Chooses boss image and background image randomly.
+     * @param stage main stage.
+     * @return a new scene.
+     */
     public static Scene battleBossScene(final Stage stage) {
         String randomBackground = String.format("file:resources/images/battle_background/%s", randomBossBackground());
         String randomBossImage = String.format("file:resources/images/boss/%s", Monsters.randomBossImage());
@@ -204,31 +229,59 @@ public class BattleGround {
         return updateBattleFight(randomBackground, randomBossImage, stage);
     }
 
-    public static void setPlayerHp(int playerHp) {
+    /**
+     * Default player HP.
+     * @param playerHp an int
+     */
+    public static void setPlayerHp(final int playerHp) {
         BattleGround.playerHp = playerHp;
     }
 
-    public static void setPlayerAttackUpper(int playerAttackUpper) {
+    /**
+     * Player attack stat upperbound.
+     * @param playerAttackUpper an int
+     */
+    public static void setPlayerAttackUpper(final int playerAttackUpper) {
         BattleGround.playerAttackUpper = playerAttackUpper;
     }
 
-    public static void setPlayerAttackLower(int playerAttackLower) {
+    /**
+     * Player attack stat lower-bound.
+     * @param playerAttackLower an int
+     */
+    public static void setPlayerAttackLower(final int playerAttackLower) {
         BattleGround.playerAttackLower = playerAttackLower;
     }
 
+    /**
+     * Sets boss's HP.
+     * @param mobHp an int.
+     */
     public static void setMobHp(final int mobHp) {
         BattleGround.mobHp = mobHp;
     }
 
-    public static void setMobUpperBound(int mobUpperBound) {
+    /**
+     * Sets upperbound HP for boss.
+     * @param mobUpperBound an int
+     */
+    public static void setMobUpperBound(final int mobUpperBound) {
         BattleGround.mobUpperBound = mobUpperBound;
     }
 
-    public static void setMobLowerBound(int mobLowerBound) {
+    /**
+     * Sets lower-bound HP for boss.
+     * @param mobLowerBound an int
+     */
+    public static void setMobLowerBound(final int mobLowerBound) {
         BattleGround.mobLowerBound = mobLowerBound;
     }
 
-    public static void setIsBoss(boolean isBoss) {
+    /**
+     * Sets if current battle is against boss.
+     * @param isBoss a boolean
+     */
+    public static void setIsBoss(final boolean isBoss) {
         BattleGround.isBoss = isBoss;
     }
 }

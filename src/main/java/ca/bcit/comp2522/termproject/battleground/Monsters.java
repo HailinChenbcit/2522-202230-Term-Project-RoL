@@ -2,10 +2,16 @@ package ca.bcit.comp2522.termproject.battleground;
 
 import java.util.Random;
 
+/**
+ * Monsters that player will be fight against.
+ * @author hailinchen
+ * @version 0.1
+ */
 public class Monsters extends BattleGround {
-
-    static String monsterImage;
-
+    /**
+     * Randomize boss image.
+     * @return a string.
+     */
     protected static String randomBossImage() {
         Random rand = new Random();
         int upperbound = 3;
@@ -18,11 +24,15 @@ public class Monsters extends BattleGround {
         };
     }
 
+    /**
+     * Randomize monster image.
+     * @return a string.
+     */
     protected static String randomMonsterImage() {
         Random rand = new Random();
         int upperbound = 7;
         int intRandom = rand.nextInt(upperbound);
-        monsterImage = switch (intRandom) {
+        return switch (intRandom) {
             case 0 -> "armorGuyBattleAxe.gif";
             case 1 -> "armorGuyShield.gif";
             case 2 -> "armorRat.gif";
@@ -32,6 +42,5 @@ public class Monsters extends BattleGround {
             case 6 -> "dinosaur.gif";
             default -> "monkRat.gif";
         };
-        return monsterImage;
     }
 }

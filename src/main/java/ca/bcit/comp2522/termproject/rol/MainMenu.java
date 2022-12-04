@@ -1,6 +1,7 @@
 package ca.bcit.comp2522.termproject.rol;
 
 import ca.bcit.comp2522.termproject.battleground.BattleGround;
+import ca.bcit.comp2522.termproject.map.GameMap;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -34,7 +35,7 @@ import java.nio.file.Paths;
  * @version 0.1
  */
 public class MainMenu extends Application {
-    private Parent createContent(final Stage primaryStage) {
+    public static Parent createContent(final Stage primaryStage) {
         Pane root = new Pane();
 
         root.setPrefSize(860, 600);
@@ -55,7 +56,7 @@ public class MainMenu extends Application {
         MenuItem itemExit = new MenuItem("EXIT");
         itemExit.setOnMousePressed(mouseEvent -> System.exit(0));
         MenuItem itemNewGame = new MenuItem("NEW GAME");
-        itemNewGame.setOnMousePressed(mouseEvent -> primaryStage.setScene(mapScene(primaryStage)));
+        itemNewGame.setOnMousePressed(mouseEvent -> primaryStage.setScene(GameMap.mapScene(primaryStage)));
         MenuBox vbox = new MenuBox(
                 itemNewGame,
                 new MenuItem("CONTACT"),
@@ -66,100 +67,6 @@ public class MainMenu extends Application {
 
         root.getChildren().addAll(title, vbox);
         return root;
-    }
-
-    private void checkSelectionBtn(final Button btnOne, final Button btnTwo, final Button btnThree) {
-        if (btnTwo.isDisable() && btnThree.isDisable()) {
-            btnOne.setDisable(false);
-        } else if (btnOne.isDisable() && btnThree.isDisable()) {
-            btnTwo.setDisable(false);
-        } else if (btnOne.isDisable() && btnTwo.isDisable()) {
-            btnThree.setDisable(false);
-        }
-    }
-
-    private void setBtnLocation(final ImageView view, final Button button, final int xCord, final int yCord) {
-        button.setTranslateX(xCord);
-        button.setTranslateY(yCord);
-        button.setGraphic(view);
-        button.setOnAction(e -> {
-            boolean result = PopUpMessages.display("Confirmation Box", "Are you sure?");
-            if (result) {
-                button.setDisable(true);
-            }
-        });
-    }
-
-    private Scene mapScene(final Stage primaryStage) {
-
-        Button backBtn = new Button("Back to Main");
-        backBtn.setId("backBtn");
-        Button monsterBtn = new Button();
-        Button treasureBtn = new Button();
-        Button bossBtn = new Button();
-
-        backBtn.getStylesheets().add("file:resources/css/mapStyle.css");
-
-
-        Image monsterIcon = new Image("file:resources/images/monster.png");
-        Image treasureIcon = new Image("file:resources/images/treasure.png");
-        Image bossIcon = new Image("file:resources/images/boss.png");
-        Image background = new Image("file:resources/images/mapBackground.jpg");
-
-        ImageView monsterView = new ImageView(monsterIcon);
-        ImageView treasureView = new ImageView(treasureIcon);
-        ImageView bossView = new ImageView(bossIcon);
-        ImageView backgroundView = new ImageView(background);
-
-        backBtn.setOnMousePressed(mouseEvent -> primaryStage.setScene(new Scene(createContent(primaryStage))));
-
-        StackPane layout2 = new StackPane();
-        StackPane.setAlignment(backBtn, Pos.TOP_RIGHT);
-
-        setBtnLocation(monsterView, monsterBtn, -320, -50);
-
-        setBtnLocation(treasureView, treasureBtn, 0, -50);
-
-        setBtnLocation(bossView, bossBtn, 320, -50);
-
-        monsterBtn.setOnAction(e -> {
-            boolean result = PopUpMessages.display("Confirmation Box", "Are you sure?");
-            if (result) {
-                BattleGround.setIsBoss(false);
-                BattleGround.setMobHp(50);
-                BattleGround.setMobLowerBound(1);
-                BattleGround.setMobUpperBound(11);
-                monsterBtn.setDisable(true);
-                primaryStage.setScene(BattleGround.battleMonsterScene(primaryStage));
-            }
-        });
-
-        treasureBtn.setOnAction(e -> {
-            Alert alert = new Alert(Alert.AlertType.NONE);
-            ButtonType btnType = new ButtonType("OK");
-            alert.getButtonTypes().setAll(btnType);
-            alert.setHeaderText("What's in the treasure box?");
-            alert.setContentText("You found a new card! !");
-            alert.show();
-            treasureBtn.setDisable(true);
-        });
-
-        bossBtn.setOnAction(e -> {
-            boolean result = PopUpMessages.display("Confirmation Box", "Are you sure?");
-            if (result) {
-                BattleGround.setIsBoss(true);
-                BattleGround.setMobHp(100);
-                BattleGround.setMobLowerBound(6);
-                BattleGround.setMobUpperBound(21);
-                bossBtn.setDisable(true);
-                primaryStage.setScene(BattleGround.battleBossScene(primaryStage));
-            }
-        });
-
-
-        layout2.getChildren().addAll(backgroundView, backBtn, monsterBtn, treasureBtn, bossBtn);
-
-        return new Scene(layout2, 1000, 600);
     }
 
     /**

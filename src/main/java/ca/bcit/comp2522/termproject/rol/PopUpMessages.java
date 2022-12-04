@@ -25,7 +25,6 @@ public class PopUpMessages {
 
          yesBtn.setOnAction(e -> {
              answer = true;
-//             action here
              window.close();
          });
 

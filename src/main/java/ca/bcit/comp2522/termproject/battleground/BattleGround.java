@@ -204,8 +204,8 @@ public class BattleGround {
         return updateBattleFight(randomBackground, randomBossImage, stage);
     }
 
-    public static void setMobHp(final int mobHp) {
-        BattleGround.mobHp = mobHp;
+    public static void setPlayerHp(int playerHp) {
+        BattleGround.playerHp = playerHp;
     }
 
     public static void setPlayerAttackUpper(int playerAttackUpper) {
@@ -214,6 +214,10 @@ public class BattleGround {
 
     public static void setPlayerAttackLower(int playerAttackLower) {
         BattleGround.playerAttackLower = playerAttackLower;
+    }
+
+    public static void setMobHp(final int mobHp) {
+        BattleGround.mobHp = mobHp;
     }
 
     public static void setMobUpperBound(int mobUpperBound) {

@@ -11,6 +11,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 /**
@@ -52,6 +54,25 @@ public class GameMap {
         Image treasureIcon = new Image("file:resources/images/miscellaneous/treasure.png");
         Image bossIcon = new Image("file:resources/images/miscellaneous/boss.png");
         Image background = new Image("file:resources/images/miscellaneous/mapBackground.jpg");
+
+        Line line1 = new Line(-200, 0, 0,0);
+        Line line2 = new Line(-200, 0, 0,0);
+
+        line1.setTranslateX(-150);
+        line1.setTranslateY(-50);
+
+        line2.setTranslateX(170);
+        line2.setTranslateY(-50);
+
+        line1.setStroke(Color.DARKGREY);
+        line1.setStrokeWidth(10);
+        line1.setStyle("-fx-line: 20");
+        line1.getStrokeDashArray().addAll(2d, 21d);
+
+        line2.setStroke(Color.DARKGREY);
+        line2.setStrokeWidth(10);
+        line2.setStyle("-fx-line: 20");
+        line2.getStrokeDashArray().addAll(2d, 21d);
 
         ImageView monsterView = new ImageView(monsterIcon);
         ImageView treasureView = new ImageView(treasureIcon);
@@ -106,8 +127,7 @@ public class GameMap {
             }
         });
 
-
-        layout2.getChildren().addAll(backgroundView, backBtn, monsterBtn, treasureBtn, bossBtn);
+        layout2.getChildren().addAll(backgroundView, backBtn, monsterBtn, treasureBtn, bossBtn, line1, line2);
 
         return new Scene(layout2, 1000, 600);
     }

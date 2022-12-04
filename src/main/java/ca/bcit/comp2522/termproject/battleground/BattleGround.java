@@ -210,7 +210,7 @@ public class BattleGround {
         setNodes(hitReturnView, 150, -245);
         setNodes(displayPlayerDamage, 150, -250);
 
-        Button atkBtn = new Button("Some card to attack");
+        Button atkBtn = new Button("Attack!");
         atkBtn.setTranslateY(300);
 
         StackPane battleGround = new StackPane();

@@ -1,17 +1,15 @@
 package ca.bcit.comp2522.termproject.rol;
 
-import ca.bcit.comp2522.termproject.battleground.BattleGround;
 import ca.bcit.comp2522.termproject.map.GameMap;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -35,6 +33,11 @@ import java.nio.file.Paths;
  * @version 0.1
  */
 public class MainMenu extends Application {
+    /**
+     * Shows the main menu scene for player.
+     * @param primaryStage stage
+     * @return a root for scene
+     */
     public static Parent createContent(final Stage primaryStage) {
         Pane root = new Pane();
 
@@ -49,7 +52,7 @@ public class MainMenu extends Application {
             System.out.println("Cannot load image");
         }
 
-        Title title = new Title("TEEMO TEST");
+        Title title = new Title("RealmOfLegend");
         title.setTranslateX(250);
         title.setTranslateY(200);
 
@@ -81,15 +84,17 @@ public class MainMenu extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
+    /*
+        Adds title for the menu
+     */
     private static class Title extends StackPane {
         /**
          * Title class to s how game title.
          *
          * @param name a string represents title.
          */
-        public Title(final String name) {
-            Rectangle bg = new Rectangle(300, 60);
+        Title(final String name) {
+            Rectangle bg = new Rectangle(400, 60);
             bg.setStroke(Color.WHITESMOKE);
             bg.setStrokeWidth(2);
             bg.setFill(null);
@@ -102,16 +107,20 @@ public class MainMenu extends Application {
             getChildren().addAll(bg, text);
         }
     }
-
+    /*
+        Adds menu items in VBox
+     */
     private static class MenuBox extends VBox {
-        public MenuBox(final MainMenu.MenuItem... items) {
+        MenuBox(final MainMenu.MenuItem... items) {
             getChildren().add(createSeparator());
 
             for (MainMenu.MenuItem item : items) {
                 getChildren().addAll(item, createSeparator());
             }
         }
-
+        /*
+            line separators in the menu box
+         */
         private Line createSeparator() {
             Line sep = new Line();
             sep.setEndX(200);
@@ -121,7 +130,7 @@ public class MainMenu extends Application {
     }
 
     private static class MenuItem extends StackPane {
-        public MenuItem(final String name) {
+        MenuItem(final String name) {
             LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE,
                     new Stop(0, Color.DARKBLUE),
                     new Stop(0.1, Color.BLACK),

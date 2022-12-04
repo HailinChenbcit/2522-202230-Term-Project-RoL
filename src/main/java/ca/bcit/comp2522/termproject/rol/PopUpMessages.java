@@ -8,10 +8,19 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Popup messages Class.
+ */
 public class PopUpMessages {
 
-    static boolean answer;
+    private static boolean answer;
 
+    /**
+     * Displays messages for player when they clicked buttons in the game map.
+     * @param title a string represents title of window
+     * @param message a string represents message of window
+     * @return a boolean
+     */
      public static boolean display(final String title, final String message) {
          Stage window = new Stage();
          window.initModality(Modality.APPLICATION_MODAL);

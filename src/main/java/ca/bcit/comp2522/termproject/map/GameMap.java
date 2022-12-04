@@ -33,7 +33,7 @@ public class GameMap {
     }
 
     /**
-     * Create a map scene for user.
+     * Create a map scene for user, a map contains monster, treasure and boss.
      * @param primaryStage stage from mainMenu.
      * @return a Scene
      */

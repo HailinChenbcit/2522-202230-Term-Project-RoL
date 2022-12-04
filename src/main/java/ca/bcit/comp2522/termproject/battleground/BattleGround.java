@@ -1,5 +1,4 @@
 package ca.bcit.comp2522.termproject.battleground;
-
 import javafx.animation.FadeTransition;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,15 +11,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * BattleGround Class.
+ * BattleGround Class to implement the battle scenes and interactions.
  *
  * @author hailinchen
- * @version 0.1
+ * @version 0.1 (2022)
  */
 public class BattleGround {
     private static int mobHp = 10;
@@ -32,6 +30,11 @@ public class BattleGround {
     private static int mobLowerBound = 1;
     private static boolean isBoss = true;
 
+    /**
+     *
+     *
+     * @return a string that represents the background png.
+     */
     private static String randomMonsterBackground() {
         Random rand = new Random();
         int intRandom = rand.nextInt(6);
@@ -121,8 +124,6 @@ public class BattleGround {
         }
     }
 
-
-
     public static Scene updateBattleFight(final String randomMobBackground, final String randomMobImage, Stage stage) {
         Image mobHealth = new Image("file:resources/images/healthBar/HealthBar" + mobHealthChecker() + ".png");
         Image playerHealth = new Image("file:resources/images/healthBar/playerHealthIcon.png");
@@ -204,15 +205,15 @@ public class BattleGround {
         return updateBattleFight(randomBackground, randomBossImage, stage);
     }
 
-    public static void setPlayerHp(int playerHp) {
+    public static void setPlayerHp(final int playerHp) {
         BattleGround.playerHp = playerHp;
     }
 
-    public static void setPlayerAttackUpper(int playerAttackUpper) {
+    public static void setPlayerAttackUpper(final int playerAttackUpper) {
         BattleGround.playerAttackUpper = playerAttackUpper;
     }
 
-    public static void setPlayerAttackLower(int playerAttackLower) {
+    public static void setPlayerAttackLower(final int playerAttackLower) {
         BattleGround.playerAttackLower = playerAttackLower;
     }
 
@@ -220,15 +221,17 @@ public class BattleGround {
         BattleGround.mobHp = mobHp;
     }
 
-    public static void setMobUpperBound(int mobUpperBound) {
+    public static void setMobUpperBound(final int mobUpperBound) {
         BattleGround.mobUpperBound = mobUpperBound;
     }
 
-    public static void setMobLowerBound(int mobLowerBound) {
+    public static void setMobLowerBound(final int mobLowerBound) {
         BattleGround.mobLowerBound = mobLowerBound;
     }
 
-    public static void setIsBoss(boolean isBoss) {
+    public static void setIsBoss(final boolean isBoss) {
         BattleGround.isBoss = isBoss;
     }
+
+
 }

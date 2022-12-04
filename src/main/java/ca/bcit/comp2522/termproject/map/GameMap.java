@@ -47,10 +47,11 @@ public class GameMap {
 
         backBtn.getStylesheets().add("file:resources/css/mapStyle.css");
 
-        Image monsterIcon = new Image("file:resources/images/monster.png");
-        Image treasureIcon = new Image("file:resources/images/treasure.png");
-        Image bossIcon = new Image("file:resources/images/boss.png");
-        Image background = new Image("file:resources/images/mapBackground.jpg");
+
+        Image monsterIcon = new Image("file:resources/images/miscellaneous/monster.png");
+        Image treasureIcon = new Image("file:resources/images/miscellaneous/treasure.png");
+        Image bossIcon = new Image("file:resources/images/miscellaneous/boss.png");
+        Image background = new Image("file:resources/images/miscellaneous/mapBackground.jpg");
 
         ImageView monsterView = new ImageView(monsterIcon);
         ImageView treasureView = new ImageView(treasureIcon);
@@ -104,6 +105,7 @@ public class GameMap {
                 primaryStage.setScene(BattleGround.battleBossScene(primaryStage));
             }
         });
+
 
         layout2.getChildren().addAll(backgroundView, backBtn, monsterBtn, treasureBtn, bossBtn);
 

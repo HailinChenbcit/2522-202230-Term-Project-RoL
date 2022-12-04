@@ -1,6 +1,6 @@
 package ca.bcit.comp2522.termproject.battleground;
-
 import javafx.animation.FadeTransition;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,53 +12,69 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * BattleGround Class.
+ * BattleGround Class to implement the battle scenes and interactions.
  *
  * @author hailinchen
- * @version 0.1
+ * @version 0.1 (2022)
  */
 public class BattleGround {
-    private static int mobHp = 10;
-    private static int playerHp = 100;
-    private static int playerAttackUpper = 11;
-    private static int playerAttackLower = 5;
+    private static final int DEFAULT_PLAYER_HEALTH = 100;
+    private static final int DEFAULT_MONSTER_HEALTH = 25;
+    private static final int DEFAULT_PLAYER_UPPERBOUND = 11;
+    private static final int DEFAULT_PLAYER_LOWER_BOUND = 5;
+    private static final int DEFAULT_MONSTER_UPPERBOUND = 11;
+    private static final int DEFAULT_MONSTER_LOWER_BOUND = 1;
+    private static final int CASE_ZERO = 0;
+    private static final int CASE_ONE = 1;
+    private static final int CASE_TWO = 2;
+    private static final int CASE_THREE = 3;
+    private static final int CASE_FOUR = 4;
+    private static final int CASE_FIVE = 5;
+    private static final int RANDOM_MONSTER_BACKGROUND_UPPERBOUND = 6;
+    private static final int RANDOM_BOSS_BACKGROUND_UPPERBOUND = 2;
+    private static int mobHp = DEFAULT_MONSTER_HEALTH;
+    private static int playerHp = DEFAULT_PLAYER_HEALTH;
+    private static int playerAttackUpper = DEFAULT_PLAYER_UPPERBOUND;
+    private static int playerAttackLower = DEFAULT_PLAYER_LOWER_BOUND;
     private static int playerHitReturn = 0;
-    private static int mobUpperBound = 11;
-    private static int mobLowerBound = 1;
+    private static int mobUpperBound = DEFAULT_MONSTER_UPPERBOUND;
+    private static int mobLowerBound = DEFAULT_MONSTER_LOWER_BOUND;
     private static boolean isBoss = true;
+
     /*
-        Randomize background for each battleground.
+     * Random monster background generator.
      */
     private static String randomMonsterBackground() {
         Random rand = new Random();
-        int intRandom = rand.nextInt(6);
+        int intRandom = rand.nextInt(RANDOM_MONSTER_BACKGROUND_UPPERBOUND);
         return switch (intRandom) {
-            case 0 -> "dungeon_background1.png";
-            case 1 -> "dungeon_background2.png";
-            case 2 -> "dungeon_background3.png";
-            case 3 -> "dungeon_background4.png";
-            case 4 -> "dungeon_background5.png";
-            case 5 -> "dungeon_background6.png";
+            case CASE_ZERO -> "dungeon_background1.png";
+            case CASE_ONE -> "dungeon_background2.png";
+            case CASE_TWO -> "dungeon_background3.png";
+            case CASE_THREE -> "dungeon_background4.png";
+            case CASE_FOUR -> "dungeon_background5.png";
+            case CASE_FIVE -> "dungeon_background6.png";
             default -> "dungeon_background7.png";
         };
     }
-
+    /*
+     * Random boss background generator.
+     */
     private static String randomBossBackground() {
         Random rand = new Random();
-        int intRandom = rand.nextInt(2);
+        int intRandom = rand.nextInt(RANDOM_BOSS_BACKGROUND_UPPERBOUND);
         return switch (intRandom) {
-            case 0 -> "boss_background1.png";
-            case 1 -> "boss_background3.png";
+            case CASE_ZERO -> "boss_background1.png";
+            case CASE_ONE -> "boss_background3.png";
             default -> "boss_background2.png";
         };
     }
     /*
-        Randomize hit stats during battle.
+     * Run the interaction between the mob and player after the card is played.
      */
     private static void battleInteraction() {
         int randomPlayerAttack = ThreadLocalRandom.current().nextInt(playerAttackLower, playerAttackUpper);
@@ -71,7 +87,7 @@ public class BattleGround {
         }
     }
     /*
-        Check monster current health.
+     * Calculates the monster's health to the proper health bar sections
      */
     private static int monsterHealthChecker() {
         if (mobHp <= 0) {
@@ -98,7 +114,7 @@ public class BattleGround {
         return 10;
     }
     /*
-        Check boss current health.
+     * Calculates the boss's health to the proper health bar sections
      */
     private static int mobHealthChecker() {
         if (isBoss) {
@@ -128,22 +144,47 @@ public class BattleGround {
             return monsterHealthChecker();
         }
     }
-
+    /*
+     * Activates the fade animation in battle scene.
+     */
+    private static void playFade(final FadeTransition fadeTransition, final Node node) {
+        fadeTransition.setFromValue(10);
+        fadeTransition.setToValue(0);
+        fadeTransition.setCycleCount(1);
+        fadeTransition.setAutoReverse(true);
+        fadeTransition.setNode(node);
+        fadeTransition.play();
+    }
+    /*
+     * Sets the x and y coordinates on the battle scene of the given node.
+     */
+    private static void setNodes(final Node node, final int first, final int second) {
+        node.setTranslateX(first);
+        node.setTranslateY(second);
+    }
+    /*
+     * Creates the details for the given label.
+     */
+    private static void setLabels(final Label label, final int spot) {
+        label.setTextFill(Color.web("#FFFFFF"));
+        label.setFont(Font.font("Times New Roman", FontWeight.BOLD, spot));
+    }
 
     /**
-     * Creates scene during battle.
-     * @param randomMobBackground a string represents boss background
-     * @param randomMobImage a string represents boss image
-     * @param stage main stage.
-     * @return a new scene
+     *  Update the battle scene between every player interaction with the mob.
+     *
+     * @param randomMobBackground a String
+     * @param randomMobImage a String
+     * @param stage a stage of the battle scene
+     * @return a scene of the battleground
      */
-    public static Scene updateBattleFight(final String randomMobBackground, final String randomMobImage,
-                                          final Stage stage) {
+    public static Scene updateBattleFight(final String randomMobBackground, final String randomMobImage, final
+    Stage stage) {
         Image mobHealth = new Image("file:resources/images/healthBar/HealthBar" + mobHealthChecker() + ".png");
         Image playerHealth = new Image("file:resources/images/healthBar/playerHealthIcon.png");
         Image background = new Image(randomMobBackground);
         Image mobImage = new Image(randomMobImage);
-        Image hitReturnImage = new Image("file:resources/images/hitReturnBackground.png");
+        Image hitReturnImage = new Image("file:resources/images/miscellaneous/hitReturnBackground.png");
 
         ImageView mobHealthView = new ImageView(mobHealth);
         ImageView mobView = new ImageView(mobImage);
@@ -153,41 +194,21 @@ public class BattleGround {
 
         Label healthLabel = new Label(": " + playerHp);
         Label displayPlayerDamage = new Label("- " + playerHitReturn);
-        healthLabel.setTextFill(Color.web("#FFFFFF"));
-        healthLabel.setFont(Font.font("Times New Roman", FontWeight.BOLD, 20));
-        displayPlayerDamage.setTextFill(Color.web("#FFFFFF"));
-        displayPlayerDamage.setFont(Font.font("Times New Roman", FontWeight.BOLD, 18));
+        setLabels(healthLabel, 20);
+        setLabels(displayPlayerDamage, 18);
 
         FadeTransition fadePlayerDamage = new FadeTransition(Duration.millis(1750), displayPlayerDamage);
         FadeTransition fadePlayerDamageBackground = new FadeTransition(Duration.millis(1750), hitReturnView);
+        playFade(fadePlayerDamage, displayPlayerDamage);
+        playFade(fadePlayerDamageBackground, hitReturnView);
 
-        fadePlayerDamage.setFromValue(10);
-        fadePlayerDamage.setToValue(0);
-        fadePlayerDamage.setCycleCount(1);
-        fadePlayerDamage.setAutoReverse(true);
-
-        fadePlayerDamageBackground.setFromValue(10);
-        fadePlayerDamageBackground.setToValue(0);
-        fadePlayerDamageBackground.setCycleCount(1);
-        fadePlayerDamageBackground.setAutoReverse(true);
-
-        fadePlayerDamage.setNode(displayPlayerDamage);
-        fadePlayerDamage.play();
-        fadePlayerDamageBackground.setNode(hitReturnView);
-        fadePlayerDamageBackground.play();
-
-
-        backgroundView.setTranslateY(-100);
-        mobView.setTranslateY(-30);
-        mobHealthView.setTranslateY(-300);
-        playerHealthView.setTranslateY(210);
-        playerHealthView.setTranslateX(-650);
-        healthLabel.setTranslateY(210);
-        healthLabel.setTranslateX(-598);
-        hitReturnView.setTranslateY(-245);
-        hitReturnView.setTranslateX(150);
-        displayPlayerDamage.setTranslateY(-250);
-        displayPlayerDamage.setTranslateX(150);
+        setNodes(backgroundView, 0, -100);
+        setNodes(mobView, 0, -30);
+        setNodes(mobHealthView, 0, -300);
+        setNodes(playerHealthView, -650, 210);
+        setNodes(healthLabel, -598, 210);
+        setNodes(hitReturnView, 150, -245);
+        setNodes(displayPlayerDamage, 150, -250);
 
         Button atkBtn = new Button("Some card to attack");
         atkBtn.setTranslateY(300);
@@ -206,9 +227,9 @@ public class BattleGround {
     }
 
     /**
-     * Chooses monster image and background image randomly.
-     * @param stage main stage.
-     * @return a new scene.
+     *  Create the monster battle scene.
+     * @param stage a stage of a battle scene
+     * @return updateBattleFight method
      */
     public static Scene battleMonsterScene(final Stage stage) {
         String randomBackground = String.format("file:resources/images/battle_background/%s", randomMonsterBackground());
@@ -218,9 +239,9 @@ public class BattleGround {
     }
 
     /**
-     * Chooses boss image and background image randomly.
-     * @param stage main stage.
-     * @return a new scene.
+     *  Create the boss battle scene.
+     * @param stage a stage of a battle scene
+     * @return updateBattleFight method
      */
     public static Scene battleBossScene(final Stage stage) {
         String randomBackground = String.format("file:resources/images/battle_background/%s", randomBossBackground());
@@ -230,7 +251,7 @@ public class BattleGround {
     }
 
     /**
-     * Default player HP.
+     * Sets the new number to the playerHP.
      * @param playerHp an int
      */
     public static void setPlayerHp(final int playerHp) {
@@ -238,7 +259,7 @@ public class BattleGround {
     }
 
     /**
-     * Player attack stat upperbound.
+     * Sets the new upperbound to the player attack.
      * @param playerAttackUpper an int
      */
     public static void setPlayerAttackUpper(final int playerAttackUpper) {
@@ -246,7 +267,7 @@ public class BattleGround {
     }
 
     /**
-     * Player attack stat lower-bound.
+     * Sets the new lower-bound to the player attack.
      * @param playerAttackLower an int
      */
     public static void setPlayerAttackLower(final int playerAttackLower) {
@@ -254,15 +275,15 @@ public class BattleGround {
     }
 
     /**
-     * Sets boss's HP.
-     * @param mobHp an int.
+     * Sets the new mob's health.
+     * @param mobHp an int
      */
     public static void setMobHp(final int mobHp) {
         BattleGround.mobHp = mobHp;
     }
 
     /**
-     * Sets upperbound HP for boss.
+     * Sets the new upperbound to the mob attack.
      * @param mobUpperBound an int
      */
     public static void setMobUpperBound(final int mobUpperBound) {
@@ -270,7 +291,7 @@ public class BattleGround {
     }
 
     /**
-     * Sets lower-bound HP for boss.
+     * Sets the new lower-bound to the mob attack.
      * @param mobLowerBound an int
      */
     public static void setMobLowerBound(final int mobLowerBound) {
@@ -278,10 +299,12 @@ public class BattleGround {
     }
 
     /**
-     * Sets if current battle is against boss.
+     * Determines if the player is interacting with the boss.
      * @param isBoss a boolean
      */
     public static void setIsBoss(final boolean isBoss) {
         BattleGround.isBoss = isBoss;
     }
+
+
 }

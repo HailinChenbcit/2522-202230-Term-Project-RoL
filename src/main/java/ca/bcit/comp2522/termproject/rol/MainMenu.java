@@ -43,7 +43,7 @@ public class MainMenu extends Application {
 
         root.setPrefSize(860, 600);
 
-        try (InputStream is = Files.newInputStream(Paths.get("resources/images/bg.jpg"))) {
+        try (InputStream is = Files.newInputStream(Paths.get("resources/images/miscellaneous/bg.jpg"))) {
             ImageView img = new ImageView(new Image(is));
             img.setFitWidth(860);
             img.setFitHeight(600);
@@ -52,7 +52,7 @@ public class MainMenu extends Application {
             System.out.println("Cannot load image");
         }
 
-        Title title = new Title("RealmOfLegend");
+        Title title = new Title("REALM OF LEGENDS");
         title.setTranslateX(250);
         title.setTranslateY(200);
 
@@ -100,8 +100,8 @@ public class MainMenu extends Application {
             bg.setFill(null);
 
             Text text = new Text(name);
-            text.setFill(Color.DARKSLATEGRAY);
-            text.setFont(Font.font("Tw Cen MT Condensed", FontWeight.BOLD, 50));
+            text.setFill(Color.WHITE);
+            text.setFont(Font.font("Tw Cen MT Condensed", FontWeight.BOLD, 40));
 
             setAlignment(Pos.CENTER);
             getChildren().addAll(bg, text);

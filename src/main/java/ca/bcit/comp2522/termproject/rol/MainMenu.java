@@ -1,14 +1,10 @@
 package ca.bcit.comp2522.termproject.rol;
 
-import ca.bcit.comp2522.termproject.battleground.BattleGround;
 import ca.bcit.comp2522.termproject.map.GameMap;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -40,7 +36,7 @@ public class MainMenu extends Application {
 
         root.setPrefSize(860, 600);
 
-        try (InputStream is = Files.newInputStream(Paths.get("resources/images/bg.jpg"))) {
+        try (InputStream is = Files.newInputStream(Paths.get("resources/images/miscellaneous/bg.jpg"))) {
             ImageView img = new ImageView(new Image(is));
             img.setFitWidth(860);
             img.setFitHeight(600);
@@ -49,7 +45,7 @@ public class MainMenu extends Application {
             System.out.println("Cannot load image");
         }
 
-        Title title = new Title("TEEMO TEST");
+        Title title = new Title("REALM OF LEGENDS");
         title.setTranslateX(250);
         title.setTranslateY(200);
 
@@ -95,8 +91,8 @@ public class MainMenu extends Application {
             bg.setFill(null);
 
             Text text = new Text(name);
-            text.setFill(Color.DARKSLATEGRAY);
-            text.setFont(Font.font("Tw Cen MT Condensed", FontWeight.BOLD, 50));
+            text.setFill(Color.WHITE);
+            text.setFont(Font.font("Tw Cen MT Condensed", FontWeight.BOLD, 40));
 
             setAlignment(Pos.CENTER);
             getChildren().addAll(bg, text);

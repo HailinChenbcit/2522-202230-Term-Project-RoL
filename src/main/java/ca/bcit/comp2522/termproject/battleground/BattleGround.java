@@ -31,9 +31,9 @@ public class BattleGround {
     private static boolean isBoss = true;
 
     /**
+     * Randomizer to select a different dungeon background in every monster battle scene.
      *
-     *
-     * @return a string that represents the background png.
+     * @return a string that represents the monster background png.
      */
     private static String randomMonsterBackground() {
         Random rand = new Random();
@@ -49,6 +49,10 @@ public class BattleGround {
         };
     }
 
+    /**
+     *
+     * @return a string that represents the boss background png.
+     */
     private static String randomBossBackground() {
         Random rand = new Random();
         int intRandom = rand.nextInt(2);
@@ -129,7 +133,7 @@ public class BattleGround {
         Image playerHealth = new Image("file:resources/images/healthBar/playerHealthIcon.png");
         Image background = new Image(randomMobBackground);
         Image mobImage = new Image(randomMobImage);
-        Image hitReturnImage = new Image("file:resources/images/hitReturnBackground.png");
+        Image hitReturnImage = new Image("file:resources/images/miscellaneous/hitReturnBackground.png");
 
         ImageView mobHealthView = new ImageView(mobHealth);
         ImageView mobView = new ImageView(mobImage);

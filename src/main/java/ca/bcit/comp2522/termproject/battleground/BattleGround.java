@@ -189,7 +189,7 @@ public class BattleGround {
         displayPlayerDamage.setTranslateY(-250);
         displayPlayerDamage.setTranslateX(150);
 
-        Button atkBtn = new Button("Some card to attack");
+        Button atkBtn = new Button("Attack!");
         atkBtn.setTranslateY(300);
 
         StackPane battleGround = new StackPane();
